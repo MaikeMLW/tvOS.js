@@ -26,7 +26,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       action: 'list_reload'
     })
 
-    tvOS.listView('TV Demo', myList, 'https://www.wdgwv.com/banner.png')
+    tvOS.listView('TV Demo', myList, 'https://www.wdgwv.com/data/img/site/back.jpg')
   } else {
     console.log('Missing it all!')
   }
