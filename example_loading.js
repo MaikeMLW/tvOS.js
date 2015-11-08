@@ -19,8 +19,8 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
         //
         // Finally. Reload
         tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
-      }, 3000)
-    }, 1000)
+      }, 5000)
+    }, 500)
   } else {
     console.log('Missing it all!')
   }
