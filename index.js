@@ -15,10 +15,7 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
       action: function (e) {
         tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
           if (c === 'Yes') {
-            tvOS.dismiss()
-            setTimeout(function () { //Weird bug fix.
-              window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
-            }, 1000)
+            window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
           } else {
             tvOS.dismiss()
           }
