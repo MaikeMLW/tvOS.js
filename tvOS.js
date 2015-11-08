@@ -594,13 +594,16 @@ var tvOS = {
    * @param string [banner] full url for banner (optional)
    * @example tvOS.listView(title, list, banner)
    */
-  listView: function (title, list, banner) {
+  listView: function (title, list, banner, height, width) {
+    if (typeof width === 'undefined') width = '1920'
+    if (typeof height === 'undefined') height = '360'
+
     if (typeof banner === 'undefined') {
       banner = ''
     } else {
       banner = `<banner>
         <background>
-          <img src="${banner}" width="1920" height="360" />
+          <img src="${banner}" width="${width}" height="${height}" />
         </background>
       </banner>`
     }
