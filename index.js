@@ -15,7 +15,7 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
       action: function (e) {
         tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
           if (c === 'Yes') {
-            window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+            tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
           } else {
             tvOS.dismiss()
           }
