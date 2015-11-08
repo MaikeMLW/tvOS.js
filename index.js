@@ -5,7 +5,6 @@ if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     var myList = []
-    var myButtons = []
 
     myList.push({
       image: 'https://www.wdgwv.com/logo.png',
