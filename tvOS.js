@@ -785,6 +785,23 @@ var tvOS = {
   },
 
   /**
+   * location
+   *
+   * go to location
+   *
+   * @example tvOS.location(url)
+   */
+  location: function (url) {
+    if (typeof window === 'object') {
+      // Used tvOS app with hack.
+      this.dismiss()
+      setTimeout(function (url) {
+        window.location(url)
+      }, 1000, url)
+    }
+  },
+
+  /**
    * error
    *
    * Please do not use, this is a internal function
