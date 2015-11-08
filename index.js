@@ -33,7 +33,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
 })
 
 function openAlertView (e) {
-  tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+  tvOS.alert('Open ' + e + '?!', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
     } else {
