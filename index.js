@@ -38,7 +38,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       image: 'https://wesdegroot.github.io/tvOS.js/images/ratingView.jpg',
       title: 'ratingView',
       subtitle: 'a example of ratingView',
-      action: 'openloadingView'
+      action: 'openratingView'
     })
 
     myList.push({
@@ -95,7 +95,7 @@ function openloadingView (e) {
 }
 
 function openratingView (e) {
-  tvOS.alert('Open ratingView?', '', ['Yes', 'No'], function (c) {
+  tvOS.alert('Open ratingView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wesdegroot.github.io/tvOS.js/example_rating.js')
     } else {
