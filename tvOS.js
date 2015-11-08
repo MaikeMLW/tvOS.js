@@ -16,6 +16,13 @@
 // - https://github.com/wesdegroot/tvOS.js
 // - https://www.wdgwv.com
 
+// * tvOS empty function
+// *
+// * If it is missing (es-lint)
+// *
+// * @var function func
+var func = function () { }
+
 // * tvOS Storage Library
 // *
 // * If it is missing (es-lint)
@@ -23,12 +30,12 @@
 // * @var object Storage
 if (typeof Storage === 'undefined') {
   var Storage = {
-    clear: function () { },
-    getItem: function () { },
-    key: function () { },
-    length: function () { },
-    removeItem: function () { },
-    setItem: function () { }
+    clear: func,
+    getItem: func,
+    key: func,
+    length: func,
+    removeItem: func,
+    setItem: func
   }
 }
 
@@ -39,22 +46,22 @@ if (typeof Storage === 'undefined') {
 // * @var object MediaItem
 if (typeof MediaItem === 'undefined') {
   var MediaItem = {
-    MediaItem: function () { },
-    contentRatingDomain: function () { },
-    contentRatingRanking: function () { },
-    isExplicit: function () { },
-    artworkImageURL: function () { },
-    description: function () { },
-    subtitle: function () { },
-    title: function () { },
-    type: function () { },
-    url: function () { },
-    highlightGroups: function () { },
-    interstitials: function () { },
-    resumeTime: function () { },
-    loadAssetID: function () { },
-    loadCertificate: function () { },
-    loadKey: function () { }
+    MediaItem: func,
+    contentRatingDomain: func,
+    contentRatingRanking: func,
+    isExplicit: func,
+    artworkImageURL: func,
+    description: func,
+    subtitle: func,
+    title: func,
+    type: func,
+    url: func,
+    highlightGroups: func,
+    interstitials: func,
+    resumeTime: func,
+    loadAssetID: func,
+    loadCertificate: func,
+    loadKey: func
   }
 }
 
@@ -108,28 +115,28 @@ if (typeof TVError === 'undefined') {
 // * @var object Player
 if (typeof Player === 'undefined') {
   var Player = {
-    overlayDocument: function () { },
-    Player: function () { },
-    playlist: function () { },
-    present: function () { },
-    pause: function () { },
-    play: function () { },
-    playbackState: function () { },
-    seekToTime: function () { },
-    setPlaybackRate: function () { },
-    stop: function () { },
-    currentMediaItem: function () { },
-    nextMediaItem: function () { },
-    previousMediaItem: function () { },
-    mediaItemDidChange: function () { },
-    mediaItemWillChange: function () { },
-    requestSeekToTime: function () { },
-    shouldHandleStateChange: function () { },
-    stateDidChange: function () { },
-    stateWillChange: function () { },
-    timeBoundaryDidCross: function () { },
-    timeDidChange: function () { },
-    timedMetadata: function () { }
+    overlayDocument: func,
+    Player: func,
+    playlist: func,
+    present: func,
+    pause: func,
+    play: func,
+    playbackState: func,
+    seekToTime: func,
+    setPlaybackRate: func,
+    stop: func,
+    currentMediaItem: func,
+    nextMediaItem: func,
+    previousMediaItem: func,
+    mediaItemDidChange: func,
+    mediaItemWillChange: func,
+    requestSeekToTime: func,
+    shouldHandleStateChange: func,
+    stateDidChange: func,
+    stateWillChange: func,
+    timeBoundaryDidCross: func,
+    timeDidChange: func,
+    timedMetadata: func
   }
 }
 
@@ -140,7 +147,7 @@ if (typeof Player === 'undefined') {
 // * @var object DOMParser
 if (typeof DOMParser === 'undefined') {
   var DOMParser = {
-    parseFromString: function () { }
+    parseFromString: func
   }
 }
 
@@ -151,12 +158,12 @@ if (typeof DOMParser === 'undefined') {
 // * @var object Playlist
 if (typeof Playlist === 'undefined') {
   var Playlist = {
-    item: function () { },
+    item: func,
     length: null,
-    Playlist: function () { },
-    pop: function () { },
-    push: function () { },
-    splice: function () { }
+    Playlist: func,
+    pop: func,
+    push: func,
+    splice: func
   }
 }
 
@@ -167,9 +174,9 @@ if (typeof Playlist === 'undefined') {
 // * @var object MenuBarDocument
 if (typeof MenuBarDocument === 'undefined') {
   var MenuBarDocument = {
-    getDocument: function () { },
-    setDocument: function () { },
-    setSelectedItem: function () { }
+    getDocument: func,
+    setDocument: func,
+    setSelectedItem: func
   }
 }
 
@@ -202,7 +209,7 @@ if (typeof navigationDocument === 'undefined') {
 if (typeof Keyboard === 'undefined') {
   var Keyboard = {
     text: null,
-    onTextChange: function () { }
+    onTextChange: func
   }
 }
 
@@ -216,7 +223,7 @@ if (typeof App === 'undefined') {
     onError: null,
     onLaunch: null,
     onExit: null,
-    reload: function () {}
+    reload: func
   }
 }
 
@@ -368,11 +375,6 @@ var tvOS = {
     // *
     // * @var string vendorIdentifier
     uuid: Device.vendorIdentifier
-  },
-
-  // Useless function i'm used to create a test...
-  test: function () {
-    console.log('testing')
   },
 
   /**
@@ -656,6 +658,7 @@ var tvOS = {
       }
     } else {
       temp += tvOS.ListViewTemplate_while.replace('tvOS_title', 'Help')
+                                         .replace('tvOS_title', 'Help')
                                          .replace('tvOS_description', 'Please read the manual: ')
                                          .replace('tvOS_action', 'tvOS._error')
                                          .replace('tvOS_image', 'https://www.wdgwv.com/logo.png')
@@ -748,7 +751,7 @@ var tvOS = {
     if (typeof items !== 'object') {
       items = [{
         title: 'Error',
-        subtitle: 'Please read the redme',
+        subtitle: 'Please read the readme',
         decoration: '🤓'
       }]
     }
@@ -815,12 +818,12 @@ var tvOS = {
   },
 
   /**
-   * error
+   * _error
    *
    * Please do not use, this is a internal function
    * create a nice error
    *
-   * @example tvOS.error()
+   * @example tvOS._error()
    */
   _error: function () {
     this.alert('Please read the manual.')
