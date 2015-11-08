@@ -10,48 +10,20 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       image: 'https://wesdegroot.github.io/tvOS.js/images/alertView.jpg',
       title: 'AlertView',
       subtitle: 'a example of AlertView',
-      decoration: '',
-      action: function (e) {
-        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
-          if (c === 'Yes') {
-            tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
-          } else {
-            tvOS.dismiss()
-          }
-        })
-      }
+      action: 'openAlertView'
     })
-
     myList.push({
-      image: 'https://www.wdgwv.com/logo.png',
+      image: 'https://wesdegroot.github.io/tvOS.js/images/alertView.jpg',
       title: 'AlertView',
       subtitle: 'a example of AlertView',
-      decoration: '',
-      action: function (e) {
-        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
-          if (c === 'Yes') {
-            tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
-          } else {
-            tvOS.dismiss()
-          }
-        })
-      }
+      action: 'openAlertView'
     })
 
     myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'Reload',
       subtitle: 'a example of Reload',
-      decoration: '',
-      action: function (e) {
-        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
-          if (c === 'Yes') {
-            tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
-          } else {
-            tvOS.dismiss()
-          }
-        })
-      }
+      action: 'list_reload'
     })
 
     tvOS.listView('TV Demo', myList, 'https://www.wdgwv.com/banner.png')
@@ -59,3 +31,23 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     console.log('Missing it all!')
   }
 })
+
+function openAlertView (e) {
+  tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function list_reload (e) {
+  tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
