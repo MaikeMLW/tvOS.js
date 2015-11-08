@@ -38,7 +38,23 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       }
     })
 
-    tvOS.Compilation('TV Demo', 'In a few seconds', 'This will be easy!', 'https://www.wdgwv.com/logo.png', myList)
+    myList.push({
+      image: 'https://www.wdgwv.com/logo.png',
+      title: 'Reload',
+      subtitle: 'a example of Reload',
+      decoration: '',
+      action: function (e) {
+        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+          if (c === 'Yes') {
+            tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+          } else {
+            tvOS.dismiss()
+          }
+        })
+      }
+    })
+
+    tvOS.listView('TV Demo', myList, 'https://www.wdgwv.com/banner.png')
   } else {
     console.log('Missing it all!')
   }
