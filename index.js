@@ -9,59 +9,21 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
 
     myList.push({
       image: 'https://www.wdgwv.com/logo.png',
-      title: 'test 1',
-      subtitle: 'my subtitle',
-      decoration: '*',
+      title: 'AlertView',
+      subtitle: 'a example of AlertView',
+      decoration: '',
       action: function (e) {
-        tvOS.alert('You clicked on: ' + e)
+        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+          if (c === 'Yes') {
+            window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+          } else {
+            tvOS.dismiss()
+          }
+        })
       }
     })
 
-    myList.push({
-      image: 'https://www.wdgwv.com/logo.png',
-      title: 'test 2',
-      subtitle: 'my subtitle',
-      decoration: '*',
-      action: function (e) {
-        tvOS.alert('You clicked on: ' + e)
-      }
-    })
-
-    myList.push({
-      image: 'https://www.wdgwv.com/logo.png',
-      title: 'test 3',
-      subtitle: 'my subtitle',
-      decoration: '*',
-      action: function (e) {
-        tvOS.alert('You clicked on: ' + e)
-      }
-    })
-
-    myButtons.push({
-      image: 'resource://button-add-alt',
-      title: '+',
-      action: function (e) {
-        tvOS.alert('+')
-      }
-    })
-
-    myButtons.push({
-      image: 'resource://button-rate',
-      title: '*',
-      action: function (e) {
-        tvOS.alert('*')
-      }
-    })
-
-    myButtons.push({
-      image: 'resource://button-more',
-      title: '...',
-      action: function (e) {
-        tvOS.alert('Reloading :)')
-        tvOS.reload()
-      }
-    })
-    tvOS.Compilation('TV Demo', 'In a few seconds', 'This will be easy!', 'https://www.wdgwv.com/logo.png', myList, myButtons)
+    tvOS.Compilation('TV Demo', 'In a few seconds', 'This will be easy!', 'https://www.wdgwv.com/logo.png', myList)
   } else {
     console.log('Missing it all!')
   }
