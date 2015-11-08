@@ -18,7 +18,7 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
             tvOS.dismiss()
             setTimeout(function () { //Weird bug fix.
               window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
-            }, 500)
+            }, 1000)
           } else {
             tvOS.dismiss()
           }
