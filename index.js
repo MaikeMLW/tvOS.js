@@ -12,11 +12,33 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       subtitle: 'a example of AlertView',
       action: 'openAlertView'
     })
+
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/alertView.jpg',
-      title: 'AlertView',
-      subtitle: 'a example of AlertView',
-      action: 'openAlertView'
+      image: 'https://wesdegroot.github.io/tvOS.js/images/compilationView.jpg',
+      title: 'compilationView',
+      subtitle: 'a example of compilationView',
+      action: 'opencompilationView'
+    })
+
+    myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/listView.jpg',
+      title: 'listView',
+      subtitle: 'a example of listView',
+      action: 'openlistView'
+    })
+
+    myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/loadingView.jpg',
+      title: 'loadingView',
+      subtitle: 'a example of loadingView',
+      action: 'openloadingView'
+    })
+
+    myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/ratingView.jpg',
+      title: 'ratingView',
+      subtitle: 'a example of ratingView',
+      action: 'openloadingView'
     })
 
     myList.push({
@@ -36,6 +58,46 @@ function openAlertView (e) {
   tvOS.alert('Open alertView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function opencompilationView (e) {
+  tvOS.alert('Open compilationView?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_compilation.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openlistView (e) {
+  tvOS.alert('Open listView?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_list.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openloadingView (e) {
+  tvOS.alert('Open loadingView?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_loading.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openratingView (e) {
+  tvOS.alert('Open ratingView?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_rating.js')
     } else {
       tvOS.dismiss()
     }

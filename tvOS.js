@@ -618,10 +618,20 @@ var tvOS = {
                                             ? list[i]['title']
                                             : 'Help'
                                            ))
+                                           .replace('tvOS_title', (
+                                            (typeof list[i]['title'] !== 'undefined')
+                                            ? list[i]['title']
+                                            : 'Help'
+                                           ))
                                            .replace('tvOS_description', (
                                             (typeof list[i]['description'] !== 'undefined')
                                             ? list[i]['description']
-                                            : 'Please read the manual: '
+                                            : 'tvOS_description'
+                                           ))
+                                           .replace('tvOS_description', (
+                                            (typeof list[i]['subtitle'] !== 'undefined')
+                                            ? list[i]['subtitle']
+                                            : 'Please read the manual!'
                                            ))
                                            .replace('tvOS_action', (
                                             (typeof list[i]['action'] !== 'undefined')
@@ -823,7 +833,7 @@ var tvOS = {
   // * @var string loadingTemplate
   loadingTemplate: `<?xml version='1.0' encoding='UTF-8' ?>
         <document>
-          <loadingTemplate>
+          <loadingTemplate theme="light">
             <activityIndicator>
               <text>%s...</text>
             </activityIndicator>
@@ -844,7 +854,7 @@ var tvOS = {
               }
             </style>
           </head>
-          <listTemplate>
+          <listTemplate theme="light">
             tvOS_banner
             <list>
               <header>
@@ -898,7 +908,7 @@ var tvOS = {
     }
     </style>
   </head>
-  <compilationTemplate theme="dark">
+  <compilationTemplate theme="light">
     <list>
       <relatedContent>
         <itemBanner>
@@ -951,7 +961,7 @@ var tvOS = {
   // * @var string TemplateRatingView
   TemplateRatingView: `<?xml version="1.0" encoding="UTF-8"?>
 <document>
-  <ratingTemplate>
+  <ratingTemplate theme="light">
       <title>tvOS_title</title>
       <ratingBadge value="tvOS_rating"></ratingBadge>
   </ratingTemplate>
