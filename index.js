@@ -7,6 +7,22 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     var myList = []
 
     myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/alertView.jpg',
+      title: 'AlertView',
+      subtitle: 'a example of AlertView',
+      decoration: '',
+      action: function (e) {
+        tvOS.alert('Open ' + e + '?', '', ['Yes', 'No'], function (c) {
+          if (c === 'Yes') {
+            tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+          } else {
+            tvOS.dismiss()
+          }
+        })
+      }
+    })
+
+    myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'AlertView',
       subtitle: 'a example of AlertView',

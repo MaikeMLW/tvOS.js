@@ -33,7 +33,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       subtitle: 'my subtitle',
       decoration: '*',
       action: function (e) {
-        tvOS.alert('You clicked on: ' + e)
+        tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
       }
     })
 

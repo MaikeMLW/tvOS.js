@@ -16,15 +16,15 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       tvOS.alert('Hi 😀', 'i\m a:', ['apple', 'tv', 'app', '😎'], function (event) {
         //
         // Display another 'weird' Alert
-        tvOS.alert('Hi 😀', 'Event=' + event + '\ncan i reload?', ['Reload'], function () {
+        tvOS.alert('Hi 😀', 'Event=' + event + '\ncan i go back?', ['Reload'], function () {
           //
           // Display Loading screen with text Reloading
-          tvOS.showLoadingIndicator('Reloading')
+          tvOS.showLoadingIndicator('Please Wait')
           // Reload timer ;)
           setTimeout(function () {
             //
             // Finally. Reload
-            tvOS.reload()
+            tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
           }, 3000)
         })
       })
