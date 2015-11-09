@@ -6,7 +6,7 @@
 //     ##       ## ##    ##     ##  ##    ##  ###  ##    ##  ##    ##
 //     ##        ###      #######    ######   ###   ######    ######
 //
-//                                                              v0.0.1
+//                                                              v0.0.3
 //
 // tvOS.js
 // (c) Wesley de Groot
@@ -267,8 +267,8 @@ var tvOS = {
   // *
   // * @var object js
   js: {
-    version: '0.0.2',
-    date: '08-NOV-2015',
+    version: '0.0.3',
+    date: '09-NOV-2015',
     release: 'beta'
   },
 
