@@ -9,6 +9,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
   if (success) {
     tvOS.RatingView('TV Demo Rating', '0.5', function (event) {
       console.log(event)
+      // tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
     })
   } else {
     console.log('Missing it all!')

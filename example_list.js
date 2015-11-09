@@ -41,10 +41,9 @@ function myCustomFunctionForAction_test3 (event) {
 }
 
 function myCustomFunctionForAction_test1 (event) {
-  tvOS.alert('Warning', 'Sure reload?', ['Yes', 'No'], function (event) {
+  tvOS.alert('Warning', 'Sure go back?', ['Yes', 'No'], function (event) {
     if (event.toLowerCase() === 'yes') {
-      tvOS.reload() // Sometimes it won't reload good.
-      // Nov  6 20:38:27  TVapp[17402] <Error>: CGBitmapContextCreate: unsupported parameter combination: set CGBITMAP_CONTEXT_LOG_ERRORS environmental variable to see the details
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
     } else {
       tvOS.dismiss() // Remove alert!
     }

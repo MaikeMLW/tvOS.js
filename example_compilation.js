@@ -1,7 +1,7 @@
 if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
-//
+
 evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
     //
@@ -15,9 +15,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       subtitle: 'my subtitle',
       decoration: '*',
       action: function (e) {
-        tvOS.alert('You clicked on: ' + e)
-        // Working due hack.
-        // window.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+        tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
       }
     })
 

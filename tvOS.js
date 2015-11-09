@@ -269,7 +269,8 @@ var tvOS = {
   js: {
     version: '0.0.3',
     date: '09-NOV-2015',
-    release: 'beta'
+    release: 'beta',
+    url: 'https://wesdegroot.github.io/tvOS.js/tvOS.js'
   },
 
   // * tvOS.version
