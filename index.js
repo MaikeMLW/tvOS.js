@@ -42,6 +42,13 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     })
 
     myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/searchView.jpg',
+      title: 'searchView',
+      subtitle: 'a example of searchView',
+      action: 'opensearchView'
+    })
+    
+    myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'Reload',
       subtitle: 'a example of Reload',
