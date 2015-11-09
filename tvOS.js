@@ -267,8 +267,8 @@ var tvOS = {
   // *
   // * @var object js
   js: {
-    version: '0.0.1',
-    date: '03-NOV-2015',
+    version: '0.0.2',
+    date: '08-NOV-2015',
     release: 'beta'
   },
 
@@ -483,8 +483,8 @@ var tvOS = {
    *
    * Show a loading indicator
    *
-   * @param [string] text loading text
-   * @param [string] presentation last presentation
+   * @param string [text] loading text
+   * @param string [presentation] last presentation
    * @example tvOS.showLoadingIndicator(text, presentation)
    */
   showLoadingIndicator: function (text, presentation) {
@@ -556,6 +556,7 @@ var tvOS = {
    * internal function, do not use
    * loads the target of a 'listView'
    *
+   * @internal
    * @param string event the event
    * @example tvOS.load(event)
    */
@@ -678,9 +679,10 @@ var tvOS = {
    *
    * create a nice RatingView (with support of objects)
    *
+   * @todo
    * @param string title the title of your RatingView
    * @param string rating the default/averange rating
-   * @param string callback function to relay on
+   * @param string [callback] function to relay on (Does not work)
    * @example tvOS.RatingView(title, rating, callback)
    */
   RatingView: function (title, rating, callback) {
@@ -709,7 +711,7 @@ var tvOS = {
    * @param string text the text of your CompilationView
    * @param string image the image of your CompilationView
    * @param array list the list (see example)
-   * @param array buttons the buttons (see example)
+   * @param array [buttons] the buttons (see example)
    * @example tvOS.CompilationView(title, subtitle, text, image, items, buttons)
    */
   CompilationView: function (title, subtitle, text, image, items, buttons) {
@@ -726,7 +728,7 @@ var tvOS = {
    * @param string text the text of your CompilationView
    * @param string image the image of your CompilationView
    * @param array list the list (see example)
-   * @param array buttons the buttons (see example)
+   * @param array [buttons] the buttons (see example)
    * @example tvOS.Compilation(title, subtitle, text, image, items, buttons)
    */
   Compilation: function (title, subtitle, text, image, items, buttons) {
@@ -801,10 +803,81 @@ var tvOS = {
   },
 
   /**
+   * searchView
+   *
+   * create a nice searchView (with support of objects)
+   *
+   * @param string search the title of your search field
+   * @param string results the subtitle of your results view
+   * @param array items the 'returned' items (see example)
+   * @param function [callback_on_search] The callback function when searching
+   * @param function [callback_on_select] The callback function when clicking on a 'item'
+   * @example tvOS.searchView(search, results, items, callback_on_search, callback_on_select)
+   */
+  searchView: function (search, results, items, callback_on_search, callback_on_select) {
+    var temp = ''
+
+    temp += tvOS.SearchView_before.replace('tvOS_search', search)
+                                  .replace('tvOS_results', results)
+
+    if (typeof items !== 'object') {
+      items = [{
+        title: 'Error',
+        image: 'https://www.wdgwv.com/logo.png'
+      }]
+    }
+
+    for (var i = 0; i < items.length; i++) {
+      temp += tvOS.SearchView_while.replace('tvOS_title', items[i]['title'])
+                                   .replace('tvOS_image', items[i]['image'])
+    }
+
+    temp += tvOS.SearchView_after
+    //
+    // Create DOM node
+    temp = tvOS.makeDocument(temp)
+
+    // Get keyboard, it must be easier...
+    // Description temp = dom node.
+    var textField = temp.childNodes.item(0) // {0: document}
+                        .childNodes.item(1) // {0: head, 1:searchTemplate}
+                        .childNodes.item(0) // {0: searchField, 1:collectionList}
+    //
+    // ok we'll finally got the good childnode, now get te Feature 'Keyboard'
+    var myKeyboard = textField.getFeature('Keyboard')
+    //
+    // On text change callback_on_search(myKeyboard.text)
+    myKeyboard.onTextChange = function () {
+      if (typeof callback_on_search === 'function') {
+        callback_on_search(myKeyboard.text)
+      } else {
+        console.log('Search: ' + myKeyboard.text)
+      }
+    }
+    // But...
+    // When someone selects a search result...
+    temp.addEventListener('select', function (e) {
+      var pressed = e.target.innerHTML
+      pressed = pressed.split('<title')[1]
+      pressed = pressed.split('/title>')[0]
+      pressed = pressed.split('>')[1]
+      pressed = pressed.split('<')[0]
+
+      if (typeof callback_on_select === 'function') {
+        callback_on_select(pressed)
+      }
+    })
+    //
+    // Display!
+    tvOS.display(temp)
+  },
+
+  /**
    * location
    *
    * go to location
    *
+   * @param string url the new location url (full url!)
    * @example tvOS.location(url)
    */
   location: function (url) {
@@ -823,6 +896,7 @@ var tvOS = {
    * Please do not use, this is a internal function
    * create a nice error
    *
+   * @internal
    * @example tvOS._error()
    */
   _error: function () {
@@ -968,8 +1042,52 @@ var tvOS = {
       <title>tvOS_title</title>
       <ratingBadge value="tvOS_rating"></ratingBadge>
   </ratingTemplate>
-</document>`
+</document>`,
 
+  // * tvOS.SearchView_before
+  // *
+  // * Template for SearchView (before)
+  // *
+  // * @var string SearchView_before
+  SearchView_before: `<?xml version="1.0" encoding="UTF-8" ?>
+  <document>
+    <head>
+      <style>
+        .suggestionListLayout {
+          margin: -150 0;
+        }
+      </style>
+    </head>
+    <searchTemplate>
+      <searchField>tvOS_search</searchField>
+      <collectionList>
+        <shelf>
+          <header>
+            <title>tvOS_results</title>
+          </header>
+        <section>`,
+
+  // * tvOS.SearchView_while
+  // *
+  // * Template for SearchView (while)
+  // *
+  // * @var string SearchView_while
+  SearchView_while: `
+            <lockup>
+              <img src="tvOS_image" width="350" height="520" />
+              <title>tvOS_title</title>
+            </lockup>`,
+
+  // * tvOS.SearchView_after
+  // *
+  // * Template for SearchView (after)
+  // *
+  // * @var string SearchView_after
+  SearchView_after: `          </section>
+        </shelf>
+      </collectionList>
+    </searchTemplate>
+  </document>`
 }
 
 // * Loaded

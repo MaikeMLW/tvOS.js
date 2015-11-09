@@ -104,6 +104,16 @@ function openratingView (e) {
   })
 }
 
+function opensearchView (e) {
+  tvOS.alert('Open searchView?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_search.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
 function list_reload (e) {
   tvOS.alert('Reload?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
