@@ -18,7 +18,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       setTimeout(function () {
         //
         // Finally. Reload
-        tvOS.location('http://localhost:9001/index.js')
+        tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
       }, 5000)
     }, 500)
   } else {
