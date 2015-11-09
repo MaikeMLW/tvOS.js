@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     var myArray = []
 
@@ -41,9 +41,10 @@ function myCustomFunctionForAction_test3 (event) {
 }
 
 function myCustomFunctionForAction_test1 (event) {
-  tvOS.alert('Warning', 'Sure Go back??', ['Yes', 'No'], function (event) {
+  tvOS.alert('Warning', 'Sure reload?', ['Yes', 'No'], function (event) {
     if (event.toLowerCase() === 'yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+      tvOS.reload() // Sometimes it won't reload good.
+      // Nov  6 20:38:27  TVapp[17402] <Error>: CGBitmapContextCreate: unsupported parameter combination: set CGBITMAP_CONTEXT_LOG_ERRORS environmental variable to see the details
     } else {
       tvOS.dismiss() // Remove alert!
     }

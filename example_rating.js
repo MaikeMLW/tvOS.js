@@ -5,7 +5,7 @@ if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 /**
  * PLEASE NOTE THAT CALLBACK WILL NOT WORK.
  */
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     tvOS.RatingView('TV Demo Rating', '0.5', function (event) {
       console.log(event)

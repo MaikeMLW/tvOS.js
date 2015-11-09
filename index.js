@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     var myList = []
 
@@ -47,7 +47,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       subtitle: 'a example of searchView',
       action: 'opensearchView'
     })
-    
+
     myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'Reload',
@@ -64,7 +64,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
 function openAlertView (e) {
   tvOS.alert('Open alertView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_alert.js')
+      tvOS.location('http://localhost:9001/example_alert.js')
     } else {
       tvOS.dismiss()
     }
@@ -74,7 +74,7 @@ function openAlertView (e) {
 function opencompilationView (e) {
   tvOS.alert('Open compilationView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_compilation.js')
+      tvOS.location('http://localhost:9001/example_compilation.js')
     } else {
       tvOS.dismiss()
     }
@@ -84,7 +84,7 @@ function opencompilationView (e) {
 function openlistView (e) {
   tvOS.alert('Open listView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_list.js')
+      tvOS.location('http://localhost:9001/example_list.js')
     } else {
       tvOS.dismiss()
     }
@@ -94,7 +94,7 @@ function openlistView (e) {
 function openloadingView (e) {
   tvOS.alert('Open loadingView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_loading.js')
+      tvOS.location('http://localhost:9001/example_loading.js')
     } else {
       tvOS.dismiss()
     }
@@ -104,7 +104,7 @@ function openloadingView (e) {
 function openratingView (e) {
   tvOS.alert('Open ratingView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_rating.js')
+      tvOS.location('http://localhost:9001/example_rating.js')
     } else {
       tvOS.dismiss()
     }
@@ -112,9 +112,9 @@ function openratingView (e) {
 }
 
 function opensearchView (e) {
-  tvOS.alert('Open searchView?', '', ['Yes', 'No'], function (c) {
+  tvOS.alert('Open searchView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_search.js')
+      tvOS.location('http://localhost:9001/example_search.js')
     } else {
       tvOS.dismiss()
     }
@@ -124,7 +124,7 @@ function opensearchView (e) {
 function list_reload (e) {
   tvOS.alert('Reload?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+      tvOS.location('http://localhost:9001/index.js')
     } else {
       tvOS.dismiss()
     }
