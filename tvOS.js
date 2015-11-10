@@ -920,6 +920,29 @@ var tvOS = {
   },
 
   /**
+   * safeString
+   *
+   * make a string safe!
+   *
+   * @param string str the unsafe string
+   * @example tvOS.safeString(str)
+   */
+  safeString: function (str) {
+    var entityMap = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#39;',
+      '/': '&#x2F;'
+    }
+
+    return String(str).replace(/[&<>''\/]/g, function (s) {
+      return entityMap[s]
+    })
+  },
+
+  /**
    * ajax
    *
    * Load a page
