@@ -9,6 +9,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     myArray.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'test 1',
+      subtitle: 'return',
       description: 'my Description',
       action: 'myCustomFunctionForAction_test1',
       accessibilityText: 'None'
@@ -25,6 +26,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     myArray.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'test 3',
+      subtitle: 'i want it all!',
       description: 'my Description',
       action: 'myCustomFunctionForAction_test3',
       accessibilityText: 'None'

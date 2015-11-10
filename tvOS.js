@@ -23,6 +23,16 @@
 // * @var function func
 var func = function () { }
 
+// * tvOS XMLHttpRequest Library
+// *
+// * If it is missing (es-lint)
+// *
+// * @var object XMLHttpRequest
+
+if (typeof XMLHttpRequest === 'undefined') {
+  var XMLHttpRequest = {}
+}
+
 // * tvOS Storage Library
 // *
 // * If it is missing (es-lint)
@@ -564,11 +574,11 @@ var tvOS = {
   load: function (event) {
     var ele = event.target
     // var templateURL = ele.getAttribute('template')
-    var presentation = ele.getAttribute('presentation')
-
+    // var presentation = ele.getAttribute('presentation')
     if (typeof event.target.getAttribute('presentation') === 'string') {
       try {
-        eval(event.target.getAttribute('presentation') + '(' + presentation + ')') //eslint-disable-line
+        var clicked = ele.childNodes.item(0).innerHTML.replace('\'', '\\\'')
+        eval(event.target.getAttribute('presentation') + '(\'' + clicked + '\')') //eslint-disable-line
       } catch (err) {
         console.log('Error with callback')
         console.log(err)
@@ -617,6 +627,19 @@ var tvOS = {
 
     if (typeof list === 'object') {
       for (var i = 0; i < list.length; i++) {
+        if (typeof list[i]['subtitle'] !== 'undefined') {
+          list[i]['subtitle'] = '<subtitle>' + list[i]['subtitle'] + '</subtitle>'
+        }
+
+        if (typeof list[i]['image_height'] === 'undefined') list[i]['image_height'] = 482
+        if (typeof list[i]['image_width'] === 'undefined') list[i]['image_width'] = 857
+
+        if (typeof list[i]['image'] !== 'undefined') {
+          list[i]['image'] = '<img src="' + list[i]['image'] + '" ' +
+                             'width="' + list[i]['image_width'] + '" ' +
+                             'height="' + list[i]['image_height'] + '" />' // TV ignores w+h.
+        }
+
         temp += tvOS.ListViewTemplate_while.replace('tvOS_title', (
                                             (typeof list[i]['title'] !== 'undefined')
                                             ? list[i]['title']
@@ -630,12 +653,17 @@ var tvOS = {
                                            .replace('tvOS_description', (
                                             (typeof list[i]['description'] !== 'undefined')
                                             ? list[i]['description']
-                                            : 'tvOS_description'
+                                            : ''
                                            ))
-                                           .replace('tvOS_description', (
+                                           .replace('tvOS_subtitle', (
                                             (typeof list[i]['subtitle'] !== 'undefined')
                                             ? list[i]['subtitle']
-                                            : 'Please read the manual!'
+                                            : ''
+                                           ))
+                                           .replace('tvOS_subtitle', (
+                                            (typeof list[i]['subtitle'] !== 'undefined')
+                                            ? list[i]['subtitle']
+                                            : ''
                                            ))
                                            .replace('tvOS_action', (
                                             (typeof list[i]['action'] !== 'undefined')
@@ -645,7 +673,7 @@ var tvOS = {
                                            .replace('tvOS_image', (
                                             (typeof list[i]['image'] !== 'undefined')
                                             ? list[i]['image']
-                                            : 'https://www.wdgwv.com/logo.png'
+                                            : ''
                                            ))
                                            .replace('tvOS_template', (
                                             (typeof list[i]['template'] !== 'undefined')
@@ -655,7 +683,7 @@ var tvOS = {
                                            .replace('tvOS_helpText', (
                                             (typeof list[i]['accessibilityText'] !== 'undefined')
                                             ? list[i]['accessibilityText']
-                                            : 'Error'
+                                            : 'No help available'
                                            ))
       }
     } else {
@@ -892,6 +920,41 @@ var tvOS = {
   },
 
   /**
+   * ajax
+   *
+   * Load a page
+   *
+   * @param string url the url to load
+   * @param string [method] the method you want to use
+   * @param function [callback] the callback you want to use.
+   * @example tvOS.ajax(url, method, callback)
+   */
+  ajax: function (url, method, callback) {
+    if (typeof method === 'undefined') {
+      method = 'GET'
+    }
+
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.open(method, url, true)
+    xmlhttp.onreadystatechange = function () {
+      var status
+      if (xmlhttp.readyState === 4) {
+        status = xmlhttp.status
+        if (status === 200) {
+          if (typeof callback === 'undefined') {
+            return xmlhttp.responseText
+          } else {
+            callback(xmlhttp.responseText)
+          }
+        } else {
+          return false
+        }
+      }
+    }
+    xmlhttp.send()
+  },
+
+  /**
    * _error
    *
    * Please do not use, this is a internal function
@@ -949,10 +1012,12 @@ var tvOS = {
   ListViewTemplate_while: `
                 <listItemLockup template="tvOS_template" presentation="tvOS_action" accessibilityText="tvOS_helpText">
                   <title>tvOS_title</title>
+                  tvOS_subtitle
                   <relatedContent>
                     <lockup>
-                      <img src="tvOS_image" width="857" height="482" />
+                      tvOS_image
                       <title>tvOS_title</title>
+                      tvOS_subtitle
                       <description class="descriptionLayout">tvOS_description</description>
                     </lockup>
                   </relatedContent>
