@@ -49,7 +49,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/searchView.jpg',
+      image: 'https://wesdegroot.github.io/tvOS.js/images/exampleApp.jpg',
       title: 'Example App',
       subtitle: 'Example App',
       action: 'openExampleApp'

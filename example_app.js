@@ -31,7 +31,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
 
     var publish_checker = function () {
       if (old_count === count) {
-        tvOS.listView('Meetups in Amsterdam', myArray, 'http://the-app-team.com/assets/images/logo.png')// , '300', '300')
+        tvOS.listView('Meetups in Amsterdam', myArray, 'http://the-app-team.com/assets/images/logo.png')
       } else {
         old_count = count
         setTimeout(publish_checker, 100)
