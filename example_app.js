@@ -18,8 +18,8 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       for (var i in data) {
         myArray.push({
           // image: 'http://the-app-team.com/assets/images/logo.png', // hide image.
-          title: tvOS.safeString(data[i]['title']),
-          description: tvOS.safeString(data[i]['description']),
+          title: data[i]['title'].replace('&', '&#38;'),
+          description: data[i]['description'].replace('&', ' and ').replace('&', ' and ').replace('&', ' and ').replace('&', ' and '),
           subtitle: data[i]['date'],
           action: 'clickedOn',
           accessibilityText: 'None'
