@@ -401,6 +401,8 @@ var tvOS = {
    */
   alert: function (title, description, buttons, callback) {
     if (typeof description === 'undefined') description = ' '
+    title = this.safeString(title)
+    description = this.safeString(description)
 
     var alertString = `<?xml version="1.0" encoding="UTF-8" ?>
     <document>
@@ -412,7 +414,7 @@ var tvOS = {
 
     for (var i = 0; i < buttons.length; i++) {
       alertString += `<button>
-       <text>` + buttons[i] + `</text>
+       <text>` + this.safeString(buttons[i]) + `</text>
       </button>`
     }
 
@@ -622,67 +624,67 @@ var tvOS = {
       </banner>`
     }
 
-    var temp = tvOS.ListViewTemplate_before.replace('tvOS_title', title)
-                                           .replace('tvOS_banner', banner)
+    var temp = tvOS.ListViewTemplate_before.replace('tvOS_title', this.safeString(title))
+                                           .replace('tvOS_banner', (banner))
 
     if (typeof list === 'object') {
       for (var i = 0; i < list.length; i++) {
         if (typeof list[i]['subtitle'] !== 'undefined') {
-          list[i]['subtitle'] = '<subtitle>' + list[i]['subtitle'] + '</subtitle>'
+          list[i]['subtitle'] = '<subtitle>' + this.safeString(list[i]['subtitle']) + '</subtitle>'
         }
 
         if (typeof list[i]['image_height'] === 'undefined') list[i]['image_height'] = 482
         if (typeof list[i]['image_width'] === 'undefined') list[i]['image_width'] = 857
 
         if (typeof list[i]['image'] !== 'undefined') {
-          list[i]['image'] = '<img src="' + list[i]['image'] + '" ' +
+          list[i]['image'] = '<img src="' + (list[i]['image']) + '" ' +
                              'width="' + list[i]['image_width'] + '" ' +
                              'height="' + list[i]['image_height'] + '" />' // TV ignores w+h.
         }
 
         temp += tvOS.ListViewTemplate_while.replace('tvOS_title', (
                                             (typeof list[i]['title'] !== 'undefined')
-                                            ? list[i]['title']
+                                            ? this.safeString(list[i]['title'])
                                             : 'Help'
                                            ))
                                            .replace('tvOS_title', (
                                             (typeof list[i]['title'] !== 'undefined')
-                                            ? list[i]['title']
+                                            ? this.safeString(list[i]['title'])
                                             : 'Help'
                                            ))
                                            .replace('tvOS_description', (
                                             (typeof list[i]['description'] !== 'undefined')
-                                            ? list[i]['description']
+                                            ? this.safeString(list[i]['description'])
                                             : ''
                                            ))
                                            .replace('tvOS_subtitle', (
                                             (typeof list[i]['subtitle'] !== 'undefined')
-                                            ? list[i]['subtitle']
+                                            ? this.safeString(list[i]['subtitle'])
                                             : ''
                                            ))
                                            .replace('tvOS_subtitle', (
                                             (typeof list[i]['subtitle'] !== 'undefined')
-                                            ? list[i]['subtitle']
+                                            ? this.safeString(list[i]['subtitle'])
                                             : ''
                                            ))
                                            .replace('tvOS_action', (
                                             (typeof list[i]['action'] !== 'undefined')
-                                            ? list[i]['action']
+                                            ? this.safeString(list[i]['action'])
                                             : 'tvOS._error'
                                            ))
                                            .replace('tvOS_image', (
                                             (typeof list[i]['image'] !== 'undefined')
-                                            ? list[i]['image']
+                                            ? (list[i]['image'])
                                             : ''
                                            ))
                                            .replace('tvOS_template', (
                                             (typeof list[i]['template'] !== 'undefined')
-                                            ? list[i]['template']
+                                            ? this.safeString(list[i]['template'])
                                             : 'none'
                                            ))
                                            .replace('tvOS_helpText', (
                                             (typeof list[i]['accessibilityText'] !== 'undefined')
-                                            ? list[i]['accessibilityText']
+                                            ? this.safeString(list[i]['accessibilityText'])
                                             : 'No help available'
                                            ))
       }
@@ -717,7 +719,7 @@ var tvOS = {
   RatingView: function (title, rating, callback) {
     var temp = ''
 
-    temp += tvOS.TemplateRatingView.replace('tvOS_title', title)
+    temp += tvOS.TemplateRatingView.replace('tvOS_title', this.safeString(title))
                                    .replace('tvOS_rating', rating)
 
     temp = tvOS.makeDocument(temp)
@@ -773,10 +775,10 @@ var tvOS = {
       }
     }
 
-    temp += tvOS.CompilationView_before.replace('tvOS_title', title)
+    temp += tvOS.CompilationView_before.replace('tvOS_title', this.safeString(title))
                                        .replace('tvOS_image', image)
-                                       .replace('tvOS_subtitle', subtitle)
-                                       .replace('tvOS_text', text)
+                                       .replace('tvOS_subtitle', this.safeString(subtitle))
+                                       .replace('tvOS_text', this.safeString(text))
                                        .replace('tvOS_buttons', _buttons)
 
     if (typeof items !== 'object') {
@@ -790,17 +792,17 @@ var tvOS = {
     for (var i = 0; i < items.length; i++) {
       temp += tvOS.CompilationView_while.replace('tvOS_title', (
                                           (typeof items[i]['title'] !== 'undefined')
-                                          ? items[i]['title']
+                                          ? this.safeString(items[i]['title'])
                                           : 'Error'
                                         ))
                                         .replace('tvOS_subtitle', (
                                           (typeof items[i]['subtitle'] !== 'undefined')
-                                          ? items[i]['subtitle']
+                                          ? this.safeString(items[i]['subtitle'])
                                           : ' '
                                         ))
                                         .replace('tvOS_decoration', (
                                           (typeof items[i]['decoration'] !== 'undefined')
-                                          ? items[i]['decoration']
+                                          ? this.safeString(items[i]['decoration'])
                                           : ' '
                                         ))
                                         .replace('tvOS_item', i + 1)
@@ -846,7 +848,7 @@ var tvOS = {
   searchView: function (search, results, items, callback_on_search, callback_on_select) {
     var temp = ''
 
-    temp += tvOS.SearchView_before.replace('tvOS_search', search)
+    temp += tvOS.SearchView_before.replace('tvOS_search', this.safeString(search))
                                   .replace('tvOS_results', results)
 
     if (typeof items !== 'object') {
@@ -857,7 +859,7 @@ var tvOS = {
     }
 
     for (var i = 0; i < items.length; i++) {
-      temp += tvOS.SearchView_while.replace('tvOS_title', items[i]['title'])
+      temp += tvOS.SearchView_while.replace('tvOS_title', this.safeString(items[i]['title']))
                                    .replace('tvOS_image', items[i]['image'])
     }
 
@@ -920,6 +922,78 @@ var tvOS = {
   },
 
   /**
+   * toEmoij
+   *
+   * make a string shine!
+   *
+   * @param string str the string with :) e.t.c.
+   * @example tvOS.toEmoij(str)
+   */
+  toEmoij: function (str) {
+    return str.replace(':)', '\ud83d\ude03')
+              .replace(':-)', '\ud83d\ude03')
+              .replace(':]', '\ud83d\ude03')
+              .replace(':-]', '\ud83d\ude03')
+              .replace(':d', '\ud83d\ude00')
+              .replace(':-d', '\ud83d\ude00')
+              .replace(':D', '\ud83d\ude00')
+              .replace(':-D', '\ud83d\ude00')
+              .replace('(H)', '\ud83d\ude0e')
+              .replace('(h)', '\ud83d\ude0e')
+              .replace(':\'(', '\ud83d\ude2d')
+              .replace(':\'-(', '\ud83d\ude2d')
+              .replace(':(', '\u2639\ufe0f')
+              .replace(':-(', '\u2639\ufe0f')
+              .replace(':[', '\u2639\ufe0f')
+              .replace(':-[', '\u2639\ufe0f')
+              .replace(':@', '\ud83d\ude21')
+              .replace(':O', '\ud83d\ude2e')
+              .replace(':-O', '\ud83d\ude2e')
+              .replace(':o', '\ud83d\ude2e')
+              .replace(':-o', '\ud83d\ude2e')
+              .replace(':/', '\ud83e\udd14')
+              .replace(':-/', '\ud83e\udd14')
+              .replace(':|', '\ud83d\ude10')
+              .replace(':-|', '\ud83d\ude10')
+              .replace('xD', '\ud83d\ude35')
+              .replace('XD', '\ud83d\ude35')
+              .replace('xd', '\ud83d\ude35')
+              .replace('xd', '\ud83d\ude35')
+              .replace('x-D', '\ud83d\ude35')
+              .replace('X-D', '\ud83d\ude35')
+              .replace('x-d', '\ud83d\ude35')
+              .replace('x-d', '\ud83d\ude35')
+              .replace(':-p', '\ud83d\ude1c')
+              .replace(':p', '\ud83d\ude1c')
+              .replace(':-P', '\ud83d\ude1c')
+              .replace(':P', '\ud83d\ude1c')
+              .replace(';p', '\ud83d\ude1c')
+              .replace(';P', '\ud83d\ude1c')
+              .replace(';-p', '\ud83d\ude1c')
+              .replace(';-P', '\ud83d\ude1c')
+              .replace(':x', '\ud83d\ude36')
+              .replace(':X', '\ud83d\ude36')
+              .replace(':-x', '\ud83d\ude36')
+              .replace(':-X', '\ud83d\ude36')
+              .replace(':+1:', '\ud83d\udc4d')
+              .replace(':-1:', '\ud83d\udc4e')
+              .replace(';)', '\ud83d\ude09')
+              .replace(';-)', '\ud83d\ude09')
+              .replace(':$', '\u263a\ufe0f')
+              .replace(':-$', '\u263a\ufe0f')
+              .replace(':s', '\ud83d\ude16')
+              .replace(':S', '\ud83d\ude16')
+              .replace(':-s', '\ud83d\ude16')
+              .replace(':-S', '\ud83d\ude16')
+              .replace('<3', '\u2764\ufe0f')
+              .replace('(L)', '\u2764\ufe0f')
+              .replace('(l)', '\u2764\ufe0f')
+              .replace('</3', '\ud83d\udc94')
+              .replace('(U)', '\ud83d\udc94')
+              .replace('(u)', '\ud83d\udc94')
+  },
+
+  /**
    * safeString
    *
    * make a string safe!
@@ -929,7 +1003,7 @@ var tvOS = {
    */
   safeString: function (str) {
     var entityMap = {
-      '&': '&amp;',
+      '&': '&#38;',
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
