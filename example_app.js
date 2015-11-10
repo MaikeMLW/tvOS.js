@@ -17,7 +17,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
 
       for (var i in data) {
         myArray.push({
-          // image: 'http://www.kvk.nl/includes/img/kvk-logo.png', // hide image.
+          // image: 'http://the-app-team.com/assets/images/logo.png', // hide image.
           title: data[i]['title'].replace('&', '&#38;'),
           description: data[i]['description'].replace('&', ' and ').replace('&', ' and ').replace('&', ' and ').replace('&', ' and '),
           subtitle: data[i]['date'],
@@ -25,6 +25,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
           accessibilityText: 'None'
         })
 
+        // Those nasty XML protectors need to be built in!
         count++
       }
     })
