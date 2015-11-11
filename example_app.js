@@ -16,19 +16,15 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
       data = JSON.parse(data)
 
       for (var i in data) {
-
-        console.log(tvOS.safeString(data[i]['title']))
-
         myArray.push({
           // image: 'http://the-app-team.com/assets/images/logo.png', // hide image.
-          title: data[i]['title'], // .replace('&', '&#38;'),
-          description: data[i]['description'], // .replace('&', ' and ').replace('&', ' and ').replace('&', ' and ').replace('&', ' and '),
+          title: data[i]['title'],
+          description: data[i]['description'],
           subtitle: data[i]['date'],
           action: 'clickedOn',
           accessibilityText: 'None'
         })
 
-        // Those nasty XML protectors need to be built in!
         count++
       }
     })
@@ -56,3 +52,6 @@ function clickedOn (event) {
     }
   })
 }
+
+// Becouse that weird eslint hates functions :/
+if (typeof clickedOn === 'undefined') console.log('ok')
