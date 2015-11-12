@@ -1190,7 +1190,7 @@ var tvOS = {
    * @param string videoID the video ID
    * @param function callback Callback
    * @example tvOS.loadYoutubeVideo(videoID, function (video) {
-   * @example console.log('Video url=' + video)
+   * @example   console.log('Video url=' + video)
    * @example })
    */
   loadYoutubeVideo: function (videoID, callback) {
