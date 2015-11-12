@@ -56,6 +56,13 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
     })
 
     myList.push({
+      image: 'https://wesdegroot.github.io/tvOS.js/images/exampleApp.jpg',
+      title: 'YouTube Video!',
+      subtitle: 'YouTube Video!',
+      action: 'openYoutubeVideo'
+    })
+
+    myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'Reload',
       subtitle: 'a example of Reload',
@@ -132,6 +139,16 @@ function openExampleApp (e) {
   tvOS.alert('Open Example App?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wesdegroot.github.io/tvOS.js/example_app.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openYoutubeVideo (e) {
+  tvOS.alert('Open YouTube Video?', '(there is no go back!)', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wesdegroot.github.io/tvOS.js/example_youtube.js')
     } else {
       tvOS.dismiss()
     }

@@ -264,11 +264,20 @@ var tvOS = {
   // *
   // * Wich windows are loaded?
   // *
-  // * @var object
+  // * @var object windows
   windows: {
     windowActive: '',
     alertActive: false,
     loadingActive: false
+  },
+
+  // * tvOS.window
+  // *
+  // * Fake window object
+  // *
+  // * @var object window
+  window: {
+    // Just 'fake'.
   },
 
   // * tvOS.js
@@ -1062,6 +1071,159 @@ var tvOS = {
    */
   _error: function () {
     this.alert('Please read the manual.')
+  },
+
+  /**
+   * parse_str
+   *
+   * Please do not use, this is a internal function
+   * String to array (like PHP's parse_str(...))
+   *
+   * @internal
+   * @param string str the string
+   * @param array array the returning array
+   * @example tvOS.parse_str(str, array)
+   */
+  parse_str: function (str, array) {
+    // Modified version of https://raw.githubusercontent.com/kvz/phpjs/master/functions/strings/parse_str.js
+    // Updated to support 'Unofficial' JavaScript Standard Coding Style
+    var strArr = String(str).replace(/^&/, '').replace(/&$/, '').split('&')
+    var sal = strArr.length
+    var i
+    var j
+    var ct
+    var p
+    var lastObj
+    var obj
+    var undef
+    var chr
+    var tmp
+    var key
+    var value
+    var postLeftBracketPos
+    var keys
+    var keysLen
+    var fixStr = function (str) {
+      return decodeURIComponent(str.replace(/\+/g, '%20'))
+    }
+    if (!array) {
+      array = this.window
+    }
+    for (i = 0; i < sal; i++) {
+      tmp = strArr[i].split('=')
+      key = fixStr(tmp[0])
+      value = (tmp.length < 2) ? '' : fixStr(tmp[1])
+
+      while (key.charAt(0) === ' ') {
+        key = key.slice(1)
+      }
+      if (key.indexOf('\x00') > -1) {
+        key = key.slice(0, key.indexOf('\x00'))
+      }
+      if (key && key.charAt(0) !== '[') {
+        keys = []
+        postLeftBracketPos = 0
+        for (j = 0; j < key.length; j++) {
+          if (key.charAt(j) === '[' && !postLeftBracketPos) {
+            postLeftBracketPos = j + 1
+          } else if (key.charAt(j) === ']') {
+            if (postLeftBracketPos) {
+              if (!keys.length) {
+                keys.push(key.slice(0, postLeftBracketPos - 1))
+              }
+              keys.push(key.substr(postLeftBracketPos, j - postLeftBracketPos))
+              postLeftBracketPos = 0
+              if (key.charAt(j + 1) !== '[') {
+                break
+              }
+            }
+          }
+        }
+        if (!keys.length) {
+          keys = [key]
+        }
+        for (j = 0; j < keys[0].length; j++) {
+          chr = keys[0].charAt(j)
+          if (chr === ' ' || chr === '.' || chr === '[') {
+            keys[0] = keys[0].substr(0, j) + '_' + keys[0].substr(j + 1)
+          }
+          if (chr === '[') {
+            break
+          }
+        }
+
+        obj = array
+
+        for (j = 0, keysLen = keys.length; j < keysLen; j++) {
+          key = keys[j].replace(/^['"]/, '').replace(/['"]$/, '')
+          var lastIter = j !== keys.length - 1
+          lastObj = obj
+          if (lastIter) { } // Just for error hiding.
+          if ((key !== '' && key !== ' ') || j === 0) {
+            if (obj[key] === undef) {
+              obj[key] = {}
+            }
+            obj = obj[key]
+          } else { // To insert new dimension
+            ct = -1
+            for (p in obj) {
+              if (obj.hasOwnProperty(p)) {
+                if (+p > ct && p.match(/^\d+$/g)) {
+                  ct = +p
+                }
+              }
+            }
+            key = ct + 1
+          }
+        }
+        lastObj[key] = value
+      }
+    }
+  },
+
+  /**
+   * loadYoutubeVideo
+   *
+   * get the mp4 URL of a youtube video
+   *
+   * @todo Fix possible errors (not allowed to load content?!)
+   * @param string videoID the video ID
+   * @param function callback Callback
+   * @example tvOS.loadYoutubeVideo(videoID)
+   */
+  loadYoutubeVideo: function (videoID, callback) {
+    // Use ajax to load video.
+    tvOS.ajax('http://www.youtube.com/get_video_info?video_id=' + videoID + '&asv=2', 'GET', function (data) {
+      var results = []
+      var info = {}
+
+      // Parse the string, and turn it into a array
+      tvOS.parse_str(data, info)
+
+      // Get the streams
+      var streams = info['url_encoded_fmt_stream_map'].split(',')
+
+      // Loop trough the streams
+      var i = 0
+      // for (var i = 0; i < streams.length; i++) {
+      //
+      // real_stream (temporary) array
+      var real_stream = {}
+      // parse this string into a array
+      tvOS.parse_str(streams[i], real_stream)
+      // ok, magic
+      real_stream['url'] += '&signature=' + real_stream['sig']
+      // push it
+      results.push(real_stream)
+      // }
+      // Return the first video url
+      if (typeof callback === 'function') {
+        callback(results[0]['url'])
+      } else {
+        console.log('URL=' + results[0]['url'])
+        tvOS._error()
+      }
+    })
   },
 
   // * tvOS.loadingTemplate
