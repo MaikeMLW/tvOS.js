@@ -723,7 +723,9 @@ var tvOS = {
    * @param string title the title of your RatingView
    * @param string rating the default/averange rating
    * @param string [callback] function to relay on (Does not work)
-   * @example tvOS.RatingView(title, rating, callback)
+   * @example tvOS.RatingView(title, rating, function (clicked) {
+   * @example   console.log('Clicked on ' + clicked) // Does not work (yet)!
+   * @example })
    */
   RatingView: function (title, rating, callback) {
     var temp = ''
@@ -852,7 +854,11 @@ var tvOS = {
    * @param array items the 'returned' items (see example)
    * @param function [callback_on_search] The callback function when searching
    * @param function [callback_on_select] The callback function when clicking on a 'item'
-   * @example tvOS.searchView(search, results, items, callback_on_search, callback_on_select)
+   * @example tvOS.searchView(search, results, items, function (typed) {
+   * @example   console.log('Typed: ' + typed)
+   * @example }, function (selected) {
+   * @example   console.log('Selected: ' + selected)
+   * @example })
    */
   searchView: function (search, results, items, callback_on_search, callback_on_select) {
     var temp = ''
@@ -1033,7 +1039,9 @@ var tvOS = {
    * @param string url the url to load
    * @param string [method] the method you want to use
    * @param function [callback] the callback you want to use.
-   * @example tvOS.ajax(url, method, callback)
+   * @example tvOS.ajax(url, method, function (data) {
+   * @example   console.log(data)
+   * @example })
    */
   ajax: function (url, method, callback) {
     if (typeof method === 'undefined') {
