@@ -1189,7 +1189,7 @@ var tvOS = {
    * @todo Fix possible errors (not allowed to load content?!)
    * @param string videoID the video ID
    * @param function callback Callback
-   * @example tvOS.loadYoutubeVideo(videoID)
+   * @example tvOS.loadYoutubeVideo(videoID, function (video) { console.log('Video url=' + video) })
    */
   loadYoutubeVideo: function (videoID, callback) {
     // Use ajax to load video.
