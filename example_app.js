@@ -4,7 +4,7 @@ if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
 // http://api.the-app-team.com/StartUp/
 
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
     // init App.
     var old_count = ''
@@ -46,7 +46,7 @@ evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (succ
 function clickedOn (event) {
   tvOS.alert(event, 'Return to example list?', ['Yes', 'No'], function (event) {
     if (event.toLowerCase() === 'yes') {
-      tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+      tvOS.location('https://wdg.github.io/tvOS.js/index.js')
     } else {
       tvOS.dismiss() // Remove alert!
     }

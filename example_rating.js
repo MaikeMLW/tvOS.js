@@ -5,11 +5,11 @@ if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 /**
  * PLEASE NOTE THAT CALLBACK WILL NOT WORK.
  */
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
     tvOS.RatingView('TV Demo Rating', '0.5', function (event) {
       console.log(event)
-      // tvOS.location('https://wesdegroot.github.io/tvOS.js/index.js')
+      // tvOS.location('https://wdg.github.io/tvOS.js/index.js')
     })
   } else {
     console.log('Missing it all!')
