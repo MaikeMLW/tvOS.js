@@ -341,6 +341,36 @@ var tvOS = {
   // * @var string vendorIdentifier
   uuid: Device.vendorIdentifier,
 
+  // * tvOS.translations
+  // *
+  // * The universal translation strings
+  // *
+  // * @var string translations
+  translations: {
+    en: { // English
+      language: 'English',
+      next: 'Next',
+      loading: 'Loading'
+    },
+    nl: { // Dutch
+      language: 'Nederlands',
+      next: 'Volgende',
+      loading: 'Laden'
+    },
+    de: { // German
+      language: 'Deutsch',
+      next: 'Weiter',
+      loading: 'Laden'
+    }
+  },
+
+  // * tvOS.lang
+  // *
+  // * The universal language
+  // *
+  // * @var string lang
+  lang: Settings.language.split('-')[0].toLowerCase(),
+
   // * tvOS.device
   // *
   // * tvOS.device Device information
@@ -512,7 +542,7 @@ var tvOS = {
   showLoadingIndicator: function (text, presentation) {
     this.removeOldDocument()
     if (typeof text === 'undefined') {
-      text = 'Loading'
+      text = tvOS.translate('loading')
     }
 
     if (!this.windows.loadingIndicator) {
@@ -1082,6 +1112,25 @@ var tvOS = {
   },
 
   /**
+   * translate
+   *
+   * Check if there is a translation for the string!
+   *
+   * @param string string the string to translate
+   * @return string
+   * @example tvOS.translate(string)
+   */
+  translate: function (string) {
+    if (typeof tvOS.strings[string] === 'string') {
+      return tvOS.strings[string]
+    } else if (tvOS.translations['en'][string] === 'string') {
+      return tvOS.translations['en'][string]
+    } else {
+      return string
+    }
+  },
+
+  /**
    * parse_str
    *
    * Please do not use, this is a internal function
@@ -1235,6 +1284,97 @@ var tvOS = {
       }
     })
   },
+
+  /**
+   * login
+   *
+   * a login form!
+   *
+   * @param string title title of the login screen
+   * @param function callback Callback
+   * @param string text button text
+   * @param string [image] show a image?
+   * @param function [callback_register] register callback action
+   * @param string [register] register button text (empty=none)
+   * @example tvOS.xx('Please login', function (data) {
+   * @example   console.log(data)
+   * @example }, 'Login', '', function (register_email) {
+   * @example   console.log(register_email)
+   * @example }, 'Register') // Example with Register (no image)
+   */
+  login: function (title, callback, text, image, callback_register, register, needPWD) {
+    if (typeof callback === 'function') {
+      var buttons = '<button><text>' + text + '</text></button>'
+
+      if (typeof needPWD !== 'boolean') { // Step #1
+        buttons = '<button><text>' + text.replace(text, tvOS.translate('next')) + '</text></button>'
+      }
+
+      if (typeof callback_register === 'function' && typeof register === 'string') {
+        buttons += '<button><text>' + register + '</text></button>'
+      }
+
+      var template = tvOS.loginTemplate.replace('tvOS_title', title)
+                                       .replace('tvOS_title', title)
+                                       .replace('tvOS_image', (typeof image === 'string' && image !== '')
+                                                              ? '<img src=\'' + image + '\' />'
+                                                              : '')
+                                       .replace('tvOS_buttons', buttons)
+                                       .replace('tvOS_secure', (typeof needPWD !== 'boolean')
+                                                               ? ''
+                                                               : 'secure=\'true\' ')
+
+      var ttemp = tvOS.makeDocument(template)
+      var ttext = ttemp.getElementById('inputText')
+      ttemp.addEventListener('select', function (e) {
+        // To human readable...
+        var pressed = e.target.innerHTML
+        pressed = pressed.split('>')[1]
+        pressed = pressed.split('<')[0]
+
+        // Get keyboard text (uh. imput field ;))
+        var keyboard = ttext.getFeature('Keyboard')
+        var inputText = keyboard.text
+
+        if (pressed === text) {
+          // Clicked on the 'login' button!
+          callback(tvOS.loginText, inputText)
+        } else if (pressed === register) {
+          // Clicked on the 'register' button!
+          callback_register(inputText)
+        } else {
+          // Clicked on our 'Next' button!
+          tvOS.loginText = inputText
+          tvOS.login(title, callback, text, image, callback_register, register, true) // Login? :D
+        }
+      })
+
+      tvOS.display(ttemp)
+    } else {
+      this._error('login')
+    }
+  },
+
+  // * tvOS.loginTemplate
+  // *
+  // * Template for Login/Passwords
+  // *
+  // * @var string loginTemplate
+  loginTemplate: `<?xml version='1.0' encoding='UTF-8' ?>
+  <document>
+    <formTemplate>
+      <banner>
+        tvOS_image<img src='https://www.wdgwv.com/logo.png' />
+        <description>
+          tvOS_title
+        </description>
+      </banner>
+      <textField tvOS_secureid="inputText">tvOS_title</textField>
+      <footer>
+         tvOS_buttons
+      </footer>
+    </formTemplate>
+  </document>`,
 
   // * tvOS.loadingTemplate
   // *
@@ -1423,6 +1563,17 @@ var tvOS = {
       </collectionList>
     </searchTemplate>
   </document>`
+}
+
+// * tvOS.strings
+// *
+// * tvOS.js load translations
+// *
+// * @var object strings
+if (typeof tvOS.translations[tvOS.lang] === 'object') {
+  tvOS.strings = tvOS.translations[tvOS.lang]
+} else {
+  tvOS.strings = tvOS.translations['en']
 }
 
 // * Loaded
