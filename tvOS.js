@@ -350,17 +350,66 @@ var tvOS = {
     en: { // English
       language: 'English',
       next: 'Next',
-      loading: 'Loading'
+      previous: 'Previous',
+      loading: 'Loading',
+      title: 'Title',
+      description: 'Description',
+      help: 'Help',
+      subtitle: 'Subtitle',
+      again: 'Again',
+      yes: 'Yes',
+      no: 'No'
     },
     nl: { // Dutch
       language: 'Nederlands',
       next: 'Volgende',
-      loading: 'Laden'
+      previous: 'Vorige',
+      loading: 'Laden',
+      title: 'Titel',
+      description: 'Beschrijving',
+      help: 'Help',
+      subtitle: 'Onderschrift',
+      again: 'Overnieuw',
+      yes: 'Ja',
+      no: 'Nee'
+    },
+    fy: { // Frisian (Dutch)
+      language: 'Frysk',
+      next: 'Folgjende',
+      previous: 'Foarige',
+      loading: 'Laden',
+      title: 'Titel',
+      description: 'Beskriuwing',
+      help: 'Help',
+      subtitle: 'ûnderskrift',
+      again: 'Oernij',
+      yes: 'Ja',
+      no: 'Nee'
+    },
+    fr: { // French
+      language: 'Français',
+      next: 'Prochaine',
+      previous: 'Antérieur',
+      loading: 'Charge',
+      title: 'Titre',
+      description: 'Description',
+      help: 'Aide',
+      subtitle: 'Légende',
+      again: 'À propos de New',
+      yes: 'Oui',
+      no: 'Non'
     },
     de: { // German
       language: 'Deutsch',
       next: 'Weiter',
-      loading: 'Laden'
+      previous: 'Zurück',
+      loading: 'Laden',
+      title: 'Titel',
+      description: 'Bezeichnung',
+      help: 'Hilfe',
+      subtitle: 'Bildunterschrift',
+      yes: 'Ja',
+      no: 'Nein'
     }
   },
 
@@ -453,8 +502,8 @@ var tvOS = {
 
     for (var i = 0; i < buttons.length; i++) {
       alertString += `<button>
-       <text>` + this.safeString(buttons[i]) + `</text>
-      </button>`
+       <text>` + this.translate(this.safeString(buttons[i])) + `</text>
+      </button>` // Auto translate, if exists!
     }
 
     alertString += `</alertTemplate>
@@ -730,7 +779,7 @@ var tvOS = {
     } else {
       temp += tvOS.ListViewTemplate_while.replace('tvOS_title', 'Help')
                                          .replace('tvOS_title', 'Help')
-                                         .replace('tvOS_description', 'Please read the manual: ')
+                                         .replace('tvOS_description', 'Please read the manual')
                                          .replace('tvOS_action', 'tvOS._error')
                                          .replace('tvOS_image', 'https://www.wdgwv.com/logo.png')
                                          .replace('tvOS_template', 'none')
@@ -1108,7 +1157,7 @@ var tvOS = {
    * @example tvOS._error()
    */
   _error: function () {
-    this.alert('Please read the manual.')
+    this.alert('Please read the manual')
   },
 
   /**
@@ -1581,7 +1630,8 @@ if (typeof tvOS.translations[tvOS.lang] === 'object') {
 // * tvOS.js Loaded
 // *
 // * @var object js
-console.log('tvOS.js v' + tvOS.js.version + ' ' + tvOS.js.release)
+// * @example tvOS.js v0.0.5 stable (nl)
+console.log('tvOS.js v' + tvOS.js.version + ' ' + tvOS.js.release + '(' + tvOS.lang + ')')
 
 /*
  * App.onError
