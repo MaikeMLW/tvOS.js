@@ -1154,10 +1154,17 @@ var tvOS = {
    * create a nice error
    *
    * @internal
-   * @example tvOS._error()
+   * @param string [err] the error
+   * @param string [description] the description
+   * @example tvOS._error(err, description)
    */
-  _error: function () {
-    this.alert('Please read the manual')
+  _error: function (err, description) {
+    this.alert('Please read the manual' + (typeof err === 'string')
+                                           ? ' for ' + err
+                                           : '',
+                                          (typeof description === 'string')
+                                            ? description
+                                            : '') // Create a error.
   },
 
   /**
