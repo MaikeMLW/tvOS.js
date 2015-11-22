@@ -1341,7 +1341,7 @@ var tvOS = {
    * @example   console.log('Video url=' + video)
    * @example })
    */
-  loadYoutubeVideo: function (videoID, callback) {
+  loadYouTubeVideo: function (videoID, callback) {
     // Use ajax to load video.
     tvOS.ajax('http://www.youtube.com/get_video_info?video_id=' + videoID + '&asv=2', 'GET', function (data) {
       var results = []

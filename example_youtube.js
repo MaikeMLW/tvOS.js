@@ -4,7 +4,7 @@ if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
 evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
-    tvOS.loadYoutubeVideo('JfG__VEF2yg', function (video) {
+    tvOS.loadYouTubeVideo('JfG__VEF2yg', function (video) {
       var player = new Player()
       var playlist = new Playlist()
       var mediaItem = new MediaItem('video', video)
