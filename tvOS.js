@@ -13,7 +13,7 @@
 // Licence: CC BY 4.0
 //
 // Please see:
-// - https://github.com/wesdegroot/tvOS.js
+// - https://github.com/wdg/tvOS.js
 // - https://www.wdgwv.com
 
 // * tvOS empty function
@@ -98,7 +98,7 @@ if (typeof Restrictions === 'undefined') {
 if (typeof Settings === 'undefined') {
   var Settings = {
     restrictions: null,
-    language: null,
+    language: 'en-EN', // if debugging in browser then always english.
     onRestrictionsChange: null,
     storefrontCountryCode: null
   }
@@ -476,6 +476,16 @@ var tvOS = {
     uuid: Device.vendorIdentifier
   },
 
+  // * tvOS.emoij
+  // *
+  // * The emoij list
+  // *
+  // * @var object emoij
+  emoij: {
+    nerd: '\uD83E\uDD13',
+    smilie: '\ud83d\ude03'
+  },
+
   /**
    * alert
    *
@@ -577,6 +587,18 @@ var tvOS = {
 
     var doc = tvOS.parser.parseFromString(resource, 'application/xml')
     return doc
+  },
+
+  /**
+   * dummy
+   *
+   * Empty function to get no pase errors for ES-Lint
+   *
+   * @param function [...] funstions
+   * @example tvOS.makeDocument(function () {})
+   */
+  dummy: function () {
+    return true
   },
 
   /**
@@ -813,7 +835,12 @@ var tvOS = {
                                    .replace('tvOS_rating', rating)
 
     temp = tvOS.makeDocument(temp)
-    temp.addEventListener('select', function (e) {
+    console.log(temp.getElementById('rating').innerHTML)
+    console.log(temp.childNodes.item(0).childNodes.item(0).childNodes.item(1).innerHTML)
+    temp.addEventListener('select', function (e) { console.log(e) })
+    temp.addEventListener('change', function (e) { console.log(e) })
+    temp.addEventListener('keyup', function (e) { console.log(e) })
+    temp.addEventListener('highlight', function (e) {
       console.log(e)
       var pressed = e.target.innerHTML
       console.log(pressed)
@@ -875,7 +902,7 @@ var tvOS = {
       items = [{
         title: 'Error',
         subtitle: 'Please read the readme',
-        decoration: '🤓'
+        decoration: this.emoij.nerd
       }]
     }
 
@@ -1024,67 +1051,75 @@ var tvOS = {
    * @example tvOS.toEmoij(str)
    */
   toEmoij: function (str) {
-    return str.replace(':)', '\ud83d\ude03')
-              .replace(':-)', '\ud83d\ude03')
-              .replace(':]', '\ud83d\ude03')
-              .replace(':-]', '\ud83d\ude03')
-              .replace(':d', '\ud83d\ude00')
-              .replace(':-d', '\ud83d\ude00')
-              .replace(':D', '\ud83d\ude00')
-              .replace(':-D', '\ud83d\ude00')
-              .replace('(H)', '\ud83d\ude0e')
-              .replace('(h)', '\ud83d\ude0e')
-              .replace(':\'(', '\ud83d\ude2d')
-              .replace(':\'-(', '\ud83d\ude2d')
-              .replace(':(', '\u2639\ufe0f')
-              .replace(':-(', '\u2639\ufe0f')
-              .replace(':[', '\u2639\ufe0f')
-              .replace(':-[', '\u2639\ufe0f')
-              .replace(':@', '\ud83d\ude21')
-              .replace(':O', '\ud83d\ude2e')
-              .replace(':-O', '\ud83d\ude2e')
-              .replace(':o', '\ud83d\ude2e')
-              .replace(':-o', '\ud83d\ude2e')
-              .replace(':/', '\ud83e\udd14')
-              .replace(':-/', '\ud83e\udd14')
-              .replace(':|', '\ud83d\ude10')
-              .replace(':-|', '\ud83d\ude10')
-              .replace('xD', '\ud83d\ude35')
-              .replace('XD', '\ud83d\ude35')
-              .replace('xd', '\ud83d\ude35')
-              .replace('xd', '\ud83d\ude35')
-              .replace('x-D', '\ud83d\ude35')
-              .replace('X-D', '\ud83d\ude35')
-              .replace('x-d', '\ud83d\ude35')
-              .replace('x-d', '\ud83d\ude35')
-              .replace(':-p', '\ud83d\ude1c')
-              .replace(':p', '\ud83d\ude1c')
-              .replace(':-P', '\ud83d\ude1c')
-              .replace(':P', '\ud83d\ude1c')
-              .replace(';p', '\ud83d\ude1c')
-              .replace(';P', '\ud83d\ude1c')
-              .replace(';-p', '\ud83d\ude1c')
-              .replace(';-P', '\ud83d\ude1c')
-              .replace(':x', '\ud83d\ude36')
-              .replace(':X', '\ud83d\ude36')
-              .replace(':-x', '\ud83d\ude36')
-              .replace(':-X', '\ud83d\ude36')
-              .replace(':+1:', '\ud83d\udc4d')
-              .replace(':-1:', '\ud83d\udc4e')
-              .replace(';)', '\ud83d\ude09')
-              .replace(';-)', '\ud83d\ude09')
-              .replace(':$', '\u263a\ufe0f')
-              .replace(':-$', '\u263a\ufe0f')
-              .replace(':s', '\ud83d\ude16')
-              .replace(':S', '\ud83d\ude16')
-              .replace(':-s', '\ud83d\ude16')
-              .replace(':-S', '\ud83d\ude16')
-              .replace('<3', '\u2764\ufe0f')
-              .replace('(L)', '\u2764\ufe0f')
-              .replace('(l)', '\u2764\ufe0f')
-              .replace('</3', '\ud83d\udc94')
-              .replace('(U)', '\ud83d\udc94')
-              .replace('(u)', '\ud83d\udc94')
+    // > tvOS.emoij.nerd
+    // < "..." = $1
+    return str.replace(/8\)/g, this.emoij.nerd)       // Nerd Face
+              .replace(/8-\)/g, this.emoij.nerd)      // Nerd Face
+              .replace(/B\)/g, this.emoij.nerd)       // Nerd Face
+              .replace(/g\B-\)/g, this.emoij.nerd)    // Nerd Face
+              .replace(/b\)/g, this.emoij.nerd)       // Nerd Face
+              .replace(/b-\)/g, this.emoij.nerd)      // Nerd Face
+              .replace(/:\)/g, '\ud83d\ude03')    // Smilie :)
+              .replace(/:-\)/g, '\ud83d\ude03')   // Smilie :)
+              .replace(/:]/g, '\ud83d\ude03')    // Smilie :)
+              .replace(/:-]/g, '\ud83d\ude03')   // Smilie :)
+              .replace(/:d/g, '\ud83d\ude00')    // Smilie :D
+              .replace(/:-d/g, '\ud83d\ude00')   // Smilie :D
+              .replace(/:D/g, '\ud83d\ude00')    // Smilie :D
+              .replace(/:-D/g, '\ud83d\ude00')   // Smilie :D
+              .replace(/(H)/g, '\ud83d\ude0e')   // Smilie with sun glasses
+              .replace(/(h)/g, '\ud83d\ude0e')   // Smilie with sun glasses
+              .replace(/:\'\(/g, '\ud83d\ude2d')  // Crying Smilie
+              .replace(/:\'-\(/g, '\ud83d\ude2d') // Crying Smilie
+              .replace(/:\(/g, '\u2639\ufe0f')
+              .replace(/:-\(/g, '\u2639\ufe0f')
+              .replace(/:\[/g, '\u2639\ufe0f')
+              .replace(/:-\[/g, '\u2639\ufe0f')
+              .replace(/:@/g, '\ud83d\ude21')
+              .replace(/:O/g, '\ud83d\ude2e')
+              .replace(/:-O/g, '\ud83d\ude2e')
+              .replace(/:o/g, '\ud83d\ude2e')
+              .replace(/:-o/g, '\ud83d\ude2e')
+              .replace(/:\//g, '\ud83e\udd14')
+              .replace(/:-\//g, '\ud83e\udd14')
+              .replace(/:\|/g, '\ud83d\ude10')
+              .replace(/:-\|/g, '\ud83d\ude10')
+              .replace(/xD/g, '\ud83d\ude35')
+              .replace(/XD/g, '\ud83d\ude35')
+              .replace(/xd/g, '\ud83d\ude35')
+              .replace(/xd/g, '\ud83d\ude35')
+              .replace(/x-D/g, '\ud83d\ude35')
+              .replace(/X-D/g, '\ud83d\ude35')
+              .replace(/x-d/g, '\ud83d\ude35')
+              .replace(/x-d/g, '\ud83d\ude35')
+              .replace(/:-p/g, '\ud83d\ude1c')
+              .replace(/:p/g, '\ud83d\ude1c')
+              .replace(/:-P/g, '\ud83d\ude1c')
+              .replace(/:P/g, '\ud83d\ude1c')
+              .replace(/;p/g, '\ud83d\ude1c')
+              .replace(/;P/g, '\ud83d\ude1c')
+              .replace(/;-p/g, '\ud83d\ude1c')
+              .replace(/;-P/g, '\ud83d\ude1c')
+              .replace(/:x/g, '\ud83d\ude36')
+              .replace(/:X/g, '\ud83d\ude36')
+              .replace(/:-x/g, '\ud83d\ude36')
+              .replace(/:-X/g, '\ud83d\ude36')
+              .replace(/:+1:/g, '\ud83d\udc4d')
+              .replace(/:-1:/g, '\ud83d\udc4e')
+              .replace(/;\)/g, '\ud83d\ude09')
+              .replace(/;-\)/g, '\ud83d\ude09')
+              .replace(/:$/g, '\u263a\ufe0f')
+              .replace(/:-$/g, '\u263a\ufe0f')
+              .replace(/:s/g, '\ud83d\ude16')
+              .replace(/:S/g, '\ud83d\ude16')
+              .replace(/:-s/g, '\ud83d\ude16')
+              .replace(/:-S/g, '\ud83d\ude16')
+              .replace(/<3/g, '\u2764\ufe0f')
+              .replace(/\(L\)/g, '\u2764\ufe0f')
+              .replace(/\(l\)/g, '\u2764\ufe0f')
+              .replace(/<\/3/g, '\ud83d\udc94')
+              .replace(/\(U\)/g, '\ud83d\udc94')
+              .replace(/\(u\)/g, '\ud83d\udc94')
   },
 
   /**
@@ -1571,7 +1606,7 @@ var tvOS = {
 <document>
   <ratingTemplate theme="light">
       <title>tvOS_title</title>
-      <ratingBadge value="tvOS_rating"></ratingBadge>
+      <ratingBadge id='rating' value="tvOS_rating"></ratingBadge>
   </ratingTemplate>
 </document>`,
 
@@ -1638,7 +1673,7 @@ if (typeof tvOS.translations[tvOS.lang] === 'object') {
 // *
 // * @var object js
 // * @example tvOS.js v0.0.5 stable (nl)
-console.log('tvOS.js v' + tvOS.js.version + ' ' + tvOS.js.release + '(' + tvOS.lang + ')')
+console.log('tvOS.js v' + tvOS.js.version + ' ' + tvOS.js.release + ' (' + tvOS.lang + ')')
 
 /*
  * App.onError

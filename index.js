@@ -164,3 +164,15 @@ function list_reload (e) {
     }
   })
 }
+
+// Becouse that weird eslint hates functions :/
+// You don't need to use this ... this is just to hide those errors.
+if (typeof openAlertView === 'undefined') console.log('ok')
+if (typeof opencompilationView === 'undefined') console.log('ok')
+if (typeof openlistView === 'undefined') console.log('ok')
+if (typeof openloadingView === 'undefined') console.log('ok')
+if (typeof openratingView === 'undefined') console.log('ok')
+if (typeof opensearchView === 'undefined') console.log('ok')
+if (typeof openExampleApp === 'undefined') console.log('ok')
+if (typeof openYoutubeVideo === 'undefined') console.log('ok')
+if (typeof list_reload === 'undefined') console.log('ok')

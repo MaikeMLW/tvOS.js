@@ -52,3 +52,6 @@ function myCustomFunctionForAction_test1 (event) {
   })
 }
 
+// Becouse that weird eslint hates functions :/
+if (typeof myCustomFunctionForAction_test1 === 'undefined') console.log('ok')
+if (typeof myCustomFunctionForAction_test3 === 'undefined') console.log('ok')
