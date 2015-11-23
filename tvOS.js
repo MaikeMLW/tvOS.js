@@ -739,7 +739,7 @@ var tvOS = {
 
     if (typeof list === 'object') {
       for (var i = 0; i < list.length; i++) {
-        if (typeof list[i]['subtitle'] !== 'undefined') {
+        if (typeof list[i]['subtitle'] !== 'undefined') { // subtitle
           list[i]['subtitle'] = '<subtitle>' + this.safeString(list[i]['subtitle']) + '</subtitle>'
         }
 
@@ -769,12 +769,12 @@ var tvOS = {
                                            ))
                                            .replace('tvOS_subtitle', (
                                             (typeof list[i]['subtitle'] !== 'undefined')
-                                            ? this.safeString(list[i]['subtitle'])
+                                            ? list[i]['subtitle']
                                             : ''
                                            ))
                                            .replace('tvOS_subtitle', (
                                             (typeof list[i]['subtitle'] !== 'undefined')
-                                            ? this.safeString(list[i]['subtitle'])
+                                            ? list[i]['subtitle']
                                             : ''
                                            ))
                                            .replace('tvOS_action', (

@@ -7,65 +7,75 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
     var myList = []
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/alertView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/alertView.jpg',
       title: 'AlertView',
       subtitle: 'a example of AlertView',
       action: 'openAlertView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/compilationView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/compilationView.jpg',
       title: 'compilationView',
       subtitle: 'a example of compilationView',
       action: 'opencompilationView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/listView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/listView.jpg',
       title: 'listView',
       subtitle: 'a example of listView',
       action: 'openlistView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/loadingView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/loadingView.jpg',
       title: 'loadingView',
       subtitle: 'a example of loadingView',
       action: 'openloadingView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/ratingView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/ratingView.jpg',
       title: 'ratingView',
       subtitle: 'a example of ratingView',
       action: 'openratingView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/searchView.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/searchView.jpg',
       title: 'searchView',
       subtitle: 'a example of searchView',
       action: 'opensearchView'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/exampleApp.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/exampleApp.jpg',
       title: 'Example App',
-      subtitle: 'Example App',
+      subtitle: 'The App Team!',
+      description: 'if you\'ve got a problem and no-one else can help, then you should call The App Team!',
       action: 'openExampleApp'
     })
 
     myList.push({
-      image: 'https://wesdegroot.github.io/tvOS.js/images/exampleApp.jpg',
+      image: 'https://wdg.github.io/tvOS.js/images/exampleApp2.png',
+      title: 'Example App',
+      subtitle: 'NU.nl News',
+      description: 'NU.nl © 2015 Sanoma Digital The Netherlands B.V.',
+      action: 'openExampleApp2'
+    })
+
+    myList.push({
+      image: 'https://wdg.github.io/tvOS.js/images/exampleApp.jpg',
       title: 'YouTube Video!',
       subtitle: 'YouTube Video!',
+      description: 'a Quick parser',
       action: 'openYoutubeVideo'
     })
 
     myList.push({
       image: 'https://www.wdgwv.com/logo.png',
       title: 'Reload',
-      subtitle: 'a example of Reload',
+      subtitle: 'Reload this app',
       action: 'list_reload'
     })
 
@@ -136,9 +146,19 @@ function opensearchView (e) {
 }
 
 function openExampleApp (e) {
-  tvOS.alert('Open Example App?', '(there is no go back!)', ['Yes', 'No'], function (c) {
+  tvOS.alert('Open Example App?', '© The-App-Team', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wdg.github.io/tvOS.js/example_app.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openExampleApp2 (e) {
+  tvOS.alert('Open NU.nl App?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('https://wdg.github.io/tvOS.js/example_app2.js')
     } else {
       tvOS.dismiss()
     }
@@ -174,5 +194,6 @@ if (typeof openloadingView === 'undefined') console.log('ok')
 if (typeof openratingView === 'undefined') console.log('ok')
 if (typeof opensearchView === 'undefined') console.log('ok')
 if (typeof openExampleApp === 'undefined') console.log('ok')
+if (typeof openExampleApp2 === 'undefined') console.log('ok')
 if (typeof openYoutubeVideo === 'undefined') console.log('ok')
 if (typeof list_reload === 'undefined') console.log('ok')

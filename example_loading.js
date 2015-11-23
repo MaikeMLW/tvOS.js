@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wesdegroot.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
     //
     // Show loading indicator with default text ('Loading')...
