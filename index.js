@@ -81,7 +81,7 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
     })
 
     myList.push({
-      image: 'http://www.environmentamerica.org/sites/environment/files/new-twitter-bird-square.png',
+      image: 'https://antjtw.files.wordpress.com/2013/09/imdb.png',
       title: 'IMDB',
       subtitle: 'IMDB Top movies',
       description: 'So cool!',
