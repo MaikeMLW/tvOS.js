@@ -66,10 +66,18 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
 
     myList.push({
       image: 'http://www.hipmarketing.nl/wp-content/uploads/2015/08/instagram-logo-transparent.png',
-      title: 'Instagram feed',
+      title: 'Instagram',
       subtitle: 'my Instagram feed @wesdegroot',
       description: 'Super cool!',
       action: 'openInstagram'
+    })
+
+    myList.push({
+      image: 'http://www.environmentamerica.org/sites/environment/files/new-twitter-bird-square.png',
+      title: 'Twitter',
+      subtitle: 'my Twitter feed @wesdegroot',
+      description: 'Super cool!',
+      action: 'openTwitter'
     })
 
     myList.push({
@@ -183,6 +191,16 @@ function openInstagram (e) {
   })
 }
 
+function openTwitter (e) {
+  tvOS.alert('Open Twitter App?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('http://localhost:9001/example_twitter.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
 function openYoutubeVideo (e) {
   tvOS.alert('Open YouTube Video?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
@@ -214,5 +232,6 @@ if (typeof opensearchView === 'undefined') console.log('ok')
 if (typeof openExampleApp === 'undefined') console.log('ok')
 if (typeof openExampleApp2 === 'undefined') console.log('ok')
 if (typeof openInstagram === 'undefined') console.log('ok')
+if (typeof openTwitter === 'undefined') console.log('ok')
 if (typeof openYoutubeVideo === 'undefined') console.log('ok')
 if (typeof list_reload === 'undefined') console.log('ok')

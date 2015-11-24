@@ -2,8 +2,6 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-// http://api.the-app-team.com/StartUp/
-
 evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     // init App.
@@ -12,14 +10,20 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
     var count = 0
 
     // load data
-    tvOS.ajax('https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=http://iconosquare.com/feed/wesdegroot&num=20', 'GET', function (data) {
+    tvOS.ajax('https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=https://twitrss.me/twitter_user_to_rss/?user=wesdegroot&num=20', 'GET', function (data) {
       data = JSON.parse(data)
       data = data['responseData']['feed']['entries']
       for (var i in data) {
+        var t = data[i]['content'].split('src="')
+        if (typeof t[1] !== 'undefined') {
+          t = t[1].split('"')[0]
+        } else {
+          t = undefined
+        }
         myArray.push({
-          image: data[i]['content'].split('src="')[1].split('"')[0], // Extract image (Q&D)
+          image: t,
           title: data[i]['title'],
-          // description: data[i]['content'],
+          description: tvOS.removeHTML(data[i]['content']), // Remove HTML.
           subtitle: String(new Date(data[i]['publishedDate'])).substring(0, 24), // better :)
           action: 'clickedOn',
           accessibilityText: 'None'
@@ -31,7 +35,7 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
 
     var publish_checker = function () {
       if (old_count === count) {
-        tvOS.listView('Instagram: @wesdegroot', myArray, 'http://www.hipmarketing.nl/wp-content/uploads/2015/08/instagram-logo-transparent.png', 382, 1057)
+        tvOS.listView('Twitter: @wesdegroot', myArray)
       } else {
         old_count = count
         setTimeout(publish_checker, 100)

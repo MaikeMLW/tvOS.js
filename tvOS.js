@@ -573,6 +573,19 @@ var tvOS = {
   },
 
   /**
+   * removeHTML
+   *
+   * remove all the HTML.
+   *
+   * @param string str the string with HTML
+   * @return string
+   * @example tvOS.removeHTML(str)
+   */
+  removeHTML: function (str) {
+    return str.replace(/<\/?[^>]+(>|$)/g, '')
+  },
+
+  /**
    * makeDocument
    *
    * make Document with resource

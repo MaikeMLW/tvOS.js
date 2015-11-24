@@ -2,8 +2,6 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-// http://api.the-app-team.com/StartUp/
-
 evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     // init App.
@@ -17,7 +15,6 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
 
       for (var i in data) {
         myArray.push({
-          // image: 'http://the-app-team.com/assets/images/logo.png', // hide image.
           title: data[i]['title'],
           description: data[i]['description'],
           subtitle: data[i]['date'],
