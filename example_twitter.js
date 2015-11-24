@@ -12,14 +12,14 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
     var count = 0
 
     // load data
-    tvOS.ajax('https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=http://www.nu.nl/rss/Algemeen&num=20', 'GET', function (data) {
+    tvOS.ajax('https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=http://iconosquare.com/feed/wesdegroot&num=20', 'GET', function (data) {
       data = JSON.parse(data)
       data = data['responseData']['feed']['entries']
       for (var i in data) {
         myArray.push({
-          // image: 'http://the-app-team.com/assets/images/logo.png', // hide image.
+          image: data[i]['content'].split('src="')[1].split('"')[0], // Extract image (Q&D)
           title: data[i]['title'],
-          description: data[i]['content'],
+          // description: data[i]['content'],
           subtitle: String(new Date(data[i]['publishedDate'])).substring(0, 24), // better :)
           action: 'clickedOn',
           accessibilityText: 'None'
@@ -31,7 +31,7 @@ evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
 
     var publish_checker = function () {
       if (old_count === count) {
-        tvOS.listView('NU.nl News', myArray, 'https://wdg.github.io/tvOS.js/images/nunl-logo-edit.png', 382, 1057)
+        tvOS.listView('Instagram: @wesdegroot', myArray, 'http://www.hipmarketing.nl/wp-content/uploads/2015/08/instagram-logo-transparent.png', 382, 1057)
       } else {
         old_count = count
         setTimeout(publish_checker, 100)

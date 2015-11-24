@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     var myList = []
 
@@ -65,6 +65,14 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
     })
 
     myList.push({
+      image: 'http://www.hipmarketing.nl/wp-content/uploads/2015/08/instagram-logo-transparent.png',
+      title: 'Instagram feed',
+      subtitle: 'my Instagram feed @wesdegroot',
+      description: 'Super cool!',
+      action: 'openInstagram'
+    })
+
+    myList.push({
       image: 'https://wdg.github.io/tvOS.js/images/exampleApp.jpg',
       title: 'YouTube Video!',
       subtitle: 'YouTube Video!',
@@ -79,7 +87,7 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
       action: 'list_reload'
     })
 
-    tvOS.listView('TV Demo', myList, 'https://www.wdgwv.com/data/img/site/back.jpg')
+    tvOS.listView('TV Demo', myList)
   } else {
     console.log('Missing it all!')
   }
@@ -88,7 +96,7 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
 function openAlertView (e) {
   tvOS.alert('Open alertView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_alert.js')
+      tvOS.location('http://localhost:9001/example_alert.js')
     } else {
       tvOS.dismiss()
     }
@@ -98,7 +106,7 @@ function openAlertView (e) {
 function opencompilationView (e) {
   tvOS.alert('Open compilationView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_compilation.js')
+      tvOS.location('http://localhost:9001/example_compilation.js')
     } else {
       tvOS.dismiss()
     }
@@ -108,7 +116,7 @@ function opencompilationView (e) {
 function openlistView (e) {
   tvOS.alert('Open listView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_list.js')
+      tvOS.location('http://localhost:9001/example_list.js')
     } else {
       tvOS.dismiss()
     }
@@ -118,7 +126,7 @@ function openlistView (e) {
 function openloadingView (e) {
   tvOS.alert('Open loadingView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_loading.js')
+      tvOS.location('http://localhost:9001/example_loading.js')
     } else {
       tvOS.dismiss()
     }
@@ -128,7 +136,7 @@ function openloadingView (e) {
 function openratingView (e) {
   tvOS.alert('Open ratingView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_rating.js')
+      tvOS.location('http://localhost:9001/example_rating.js')
     } else {
       tvOS.dismiss()
     }
@@ -138,7 +146,7 @@ function openratingView (e) {
 function opensearchView (e) {
   tvOS.alert('Open searchView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_search.js')
+      tvOS.location('http://localhost:9001/example_search.js')
     } else {
       tvOS.dismiss()
     }
@@ -148,7 +156,7 @@ function opensearchView (e) {
 function openExampleApp (e) {
   tvOS.alert('Open Example App?', '© The-App-Team', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_app.js')
+      tvOS.location('http://localhost:9001/example_app.js')
     } else {
       tvOS.dismiss()
     }
@@ -158,7 +166,17 @@ function openExampleApp (e) {
 function openExampleApp2 (e) {
   tvOS.alert('Open NU.nl App?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_app2.js')
+      tvOS.location('http://localhost:9001/example_app2.js')
+    } else {
+      tvOS.dismiss()
+    }
+  })
+}
+
+function openInstagram (e) {
+  tvOS.alert('Open Instagram App?', '', ['Yes', 'No'], function (c) {
+    if (c === 'Yes') {
+      tvOS.location('http://localhost:9001/example_instagram.js')
     } else {
       tvOS.dismiss()
     }
@@ -168,7 +186,7 @@ function openExampleApp2 (e) {
 function openYoutubeVideo (e) {
   tvOS.alert('Open YouTube Video?', '(there is no go back!)', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/example_youtube.js')
+      tvOS.location('http://localhost:9001/example_youtube.js')
     } else {
       tvOS.dismiss()
     }
@@ -178,7 +196,7 @@ function openYoutubeVideo (e) {
 function list_reload (e) {
   tvOS.alert('Reload?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/index.js')
+      tvOS.location('http://localhost:9001/index.js')
     } else {
       tvOS.dismiss()
     }
@@ -195,5 +213,6 @@ if (typeof openratingView === 'undefined') console.log('ok')
 if (typeof opensearchView === 'undefined') console.log('ok')
 if (typeof openExampleApp === 'undefined') console.log('ok')
 if (typeof openExampleApp2 === 'undefined') console.log('ok')
+if (typeof openInstagram === 'undefined') console.log('ok')
 if (typeof openYoutubeVideo === 'undefined') console.log('ok')
 if (typeof list_reload === 'undefined') console.log('ok')
