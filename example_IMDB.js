@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     // init App.
     var old_count = ''
@@ -50,7 +50,7 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
 function clickedOn (event) {
   tvOS.alert(event, 'Return to example list?', ['Yes', 'No'], function (event) {
     if (event.toLowerCase() === 'yes') {
-      tvOS.location('https://wdg.github.io/tvOS.js/index.js')
+      tvOS.location('http://localhost:9001/index.js')
     } else {
       tvOS.dismiss() // Remove alert!
     }

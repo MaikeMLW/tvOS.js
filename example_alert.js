@@ -2,7 +2,7 @@ if (App === 'undefined') var App = {} // Eslint error.
 if (tvOS === 'undefined') var tvOS = {} // Eslint error.
 if (evaluateScripts === 'undefined') var evaluateScripts = {} // Eslint error.
 
-evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
+evaluateScripts(['http://localhost:9001/tvOS.js'], function (success) {
   if (success) {
     //
     // Show loading indicator with default text ('Loading')...
@@ -24,7 +24,7 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
           setTimeout(function () {
             //
             // Finally. Reload
-            tvOS.location('https://wdg.github.io/tvOS.js/index.js')
+            tvOS.location('http://localhost:9001/index.js')
           }, 3000)
         })
       })

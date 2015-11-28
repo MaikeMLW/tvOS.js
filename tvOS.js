@@ -6,7 +6,7 @@
 //     ##       ## ##    ##     ##  ##    ##  ###  ##    ##  ##    ##
 //     ##        ###      #######    ######   ###   ######    ######
 //
-//                                                              v0.0.3
+//                                                              v0.0.5
 //
 // tvOS.js
 // (c) Wesley de Groot
@@ -253,6 +253,25 @@ if (typeof Device === 'undefined') {
   }
 }
 
+// * tvOS Checker.
+// *
+// * tvOS needs console.log and window.location
+// * if not exists, then present a error and make a temporart one so we don't get to much errors
+// *
+// * @var object console
+// * @var object window
+if (typeof console === 'undefined' || typeof window === 'undefined') {
+  // Create a alert, i'm missing my special code!
+  var parser = new DOMParser()
+  var alertDoc = parser.parseFromString('<?xml version="1.0" encoding="UTF-8" ?><document>' +
+    '<alertTemplate><title>ALERT</title><description>I am missing some special code.<br />' +
+    'Please see: https://github.com/wdg/tvOS.js</description>`</alertTemplate></document>', 'application/xml')
+  navigationDocument.presentModal(alertDoc)
+
+  var console = {log: function () { }}
+  var window = {location: function () {}}
+}
+
 // * tvOS Library
 // *
 // * Making your work more easy!
@@ -286,10 +305,10 @@ var tvOS = {
   // *
   // * @var object js
   js: {
-    version: '0.0.3',
-    date: '09-NOV-2015',
+    version: '0.0.5',
+    date: '01-DEC-2015',
     release: 'beta',
-    url: 'https://wdg.github.io/tvOS.js/tvOS.js'
+    url: 'http://localhost:9001/tvOS.js'
   },
 
   // * tvOS.version
@@ -483,7 +502,10 @@ var tvOS = {
   // * @var object emoij
   emoij: {
     nerd: '\uD83E\uDD13',
-    smilie: '\ud83d\ude03'
+    smilie: '\ud83d\ude03',
+    dsmilie: '\ud83d\ude00',
+    heart: '\u2764\ufe0f',
+    brokenheart: '\ud83d\udc94'
   },
 
   /**
@@ -498,29 +520,45 @@ var tvOS = {
    * @example tvOS.alert('Update Avable', 'Update now', ['Yes', 'No'], function (e) { console.log('Clicked: ' + event) })
    */
   alert: function (title, description, buttons, callback) {
+    // if no description, then make a empty description
     if (typeof description === 'undefined') description = ' '
+
+    // make the title 'safe'
     title = this.safeString(title)
+
+    // make the description 'safe'
     description = this.safeString(description)
 
+    // @var string alertString
     var alertString = `<?xml version="1.0" encoding="UTF-8" ?>
     <document>
      <alertTemplate>
       <title>${title}</title>
       <description>${description}</description>`
 
+    // if no buttons, then create a 'ok' button.
     if (typeof buttons !== 'object') buttons = ['ok']
 
+    // Otherwise parse the buttons
     for (var i = 0; i < buttons.length; i++) {
+      // walk through the buttons and create them
+      // @var string alertString
       alertString += `<button>
        <text>` + this.translate(this.safeString(buttons[i])) + `</text>
       </button>` // Auto translate, if exists!
     }
 
+    // @var string alertString
     alertString += `</alertTemplate>
     </document>`
 
+    // Create a DOM Parser
     var parser = new DOMParser()
+
+    // Create the document
     var alertDoc = parser.parseFromString(alertString, 'application/xml')
+
+    // if there is a callback then...
     if (typeof callback !== 'undefined') {
       alertDoc.addEventListener('select', function (e) {
         // Fix nasty return
@@ -529,6 +567,7 @@ var tvOS = {
         pressed = pressed.split('<')[0]
 
         // Human readable!
+        // call the callback
         callback(pressed)
       }, false)
     } else {
@@ -536,14 +575,20 @@ var tvOS = {
         var pressed = e.target.innerHTML
         pressed = pressed.split('>')[1]
         pressed = pressed.split('<')[0]
-
+        // OTHERWISE DISMISS WHEN CLICKED ON A BUTTON
         navigationDocument.dismissModal(alertDoc)
         tvOS.windows.alertActive = false
         return pressed
       }, false)
     }
+
+    // Present the alert window
     navigationDocument.presentModal(alertDoc)
+
+    // Wich window is active
     this.windows.windowActive = alertDoc
+
+    // Is there a alert active?
     this.windows.alertActive = true
   },
 
@@ -556,7 +601,9 @@ var tvOS = {
    * @example tvOS.removeOldDocument()
    */
   removeOldDocument: function () {
+    // If there is at least one window active, then remove it
     if (this.windows.windowActive !== '') {
+      // Removing window
       navigationDocument.dismissModal(this.windows.windowActive)
     }
   },
@@ -569,6 +616,7 @@ var tvOS = {
    * @example tvOS.reload()
    */
   reload: function () {
+    // Reload the application
     App.reload()
   },
 
@@ -582,6 +630,9 @@ var tvOS = {
    * @example tvOS.removeHTML(str)
    */
   removeHTML: function (str) {
+    // remove all unnecessary HTML Tags from a string
+    // @var string str
+    // @return string without HTML Tags
     return str.replace(/<\/?[^>]+(>|$)/g, '')
   },
 
@@ -595,10 +646,14 @@ var tvOS = {
    */
   makeDocument: function (resource) {
     if (!tvOS.parser) {
+      // is there no parser? then create it.
       tvOS.parser = new DOMParser()
     }
 
+    // Parse the document
     var doc = tvOS.parser.parseFromString(resource, 'application/xml')
+
+    // Return the brand new document
     return doc
   },
 
@@ -611,6 +666,7 @@ var tvOS = {
    * @example tvOS.makeDocument(function () {})
    */
   dummy: function () {
+    // This will do... nothing.
     return true
   },
 
@@ -624,13 +680,17 @@ var tvOS = {
    * @example tvOS.showLoadingIndicator(text, presentation)
    */
   showLoadingIndicator: function (text, presentation) {
+    // First remove the old document
     this.removeOldDocument()
+
+    // if there is no text then replace it with 'Loading'
     if (typeof text === 'undefined') {
+      // And translate it
       text = tvOS.translate('loading')
     }
 
     if (!this.windows.loadingIndicator) {
-      this.loadingIndicator = this.makeDocument(this.loadingTemplate.replace('%s', text))
+      this.loadingIndicator = this.makeDocument(this.loadingTemplate.replace('%s', tvOS.translate(text)))
       this.windows.windowActive = this.loadingIndicator
     }
 
@@ -842,23 +902,38 @@ var tvOS = {
    * @example })
    */
   RatingView: function (title, rating, callback) {
+    // Create a temporary empty string.
     var temp = ''
 
+    // Parse the template Rating View
     temp += tvOS.TemplateRatingView.replace('tvOS_title', this.safeString(title))
                                    .replace('tvOS_rating', rating)
 
+    // Create the document..
     temp = tvOS.makeDocument(temp)
+
+    // @DEBUG
     console.log(temp.getElementById('rating').innerHTML)
+
+    // @DEBUG
     console.log(temp.childNodes.item(0).childNodes.item(0).childNodes.item(1).innerHTML)
+
+    // @DEBUG
     temp.addEventListener('select', function (e) { console.log(e) })
-    temp.addEventListener('change', function (e) { console.log(e) })
-    temp.addEventListener('keyup', function (e) { console.log(e) })
+
+    // @DEBUG
     temp.addEventListener('highlight', function (e) {
+      // @DEBUG
       console.log(e)
+
+      // @DEBUG
       var pressed = e.target.innerHTML
+
+      // @DEBUG
       console.log(pressed)
     })
 
+    // Display the RatingView
     tvOS.display(temp)
   },
 
@@ -876,6 +951,7 @@ var tvOS = {
    * @example tvOS.CompilationView(title, subtitle, text, image, items, buttons)
    */
   CompilationView: function (title, subtitle, text, image, items, buttons) {
+    // Trigger this.compilation(title, subtitle, text, image, items, buttons)
     this.Compilation(title, subtitle, text, image, items, buttons)
   },
 
@@ -893,11 +969,16 @@ var tvOS = {
    * @example tvOS.Compilation(title, subtitle, text, image, items, buttons)
    */
   Compilation: function (title, subtitle, text, image, items, buttons) {
+    // Create a temporary empty string.
     var temp = ''
+
+    // Create a temporary empty string for the buttons.
     var _buttons = ''
 
+    // If there are buttons then loop through it.
     if (typeof buttons !== 'undefined') {
       for (var b = 0; b < buttons.length; b++) {
+        // Add the button to the temporary string
         _buttons += `<buttonLockup>
                        <badge src="${buttons[b]['image']}" class="whiteButton" />
                        <title>${buttons[b]['title']}</title>
@@ -905,12 +986,14 @@ var tvOS = {
       }
     }
 
+    // Parse the CompilationView (BEFORE) Part
     temp += tvOS.CompilationView_before.replace('tvOS_title', this.safeString(title))
                                        .replace('tvOS_image', image)
                                        .replace('tvOS_subtitle', this.safeString(subtitle))
                                        .replace('tvOS_text', this.safeString(text))
                                        .replace('tvOS_buttons', _buttons)
 
+    // If there is something weird (no items) then display a Error object.
     if (typeof items !== 'object') {
       items = [{
         title: 'Error',
@@ -919,47 +1002,65 @@ var tvOS = {
       }]
     }
 
+    // Loop Through the items
     for (var i = 0; i < items.length; i++) {
+      // Add the (while) part of the CompilationView
       temp += tvOS.CompilationView_while.replace('tvOS_title', (
                                           (typeof items[i]['title'] !== 'undefined')
                                           ? this.safeString(items[i]['title'])
                                           : 'Error'
-                                        ))
+                                        )) // Parse the title
                                         .replace('tvOS_subtitle', (
                                           (typeof items[i]['subtitle'] !== 'undefined')
                                           ? this.safeString(items[i]['subtitle'])
                                           : ' '
-                                        ))
+                                        )) // Parse the subtitle
                                         .replace('tvOS_decoration', (
                                           (typeof items[i]['decoration'] !== 'undefined')
                                           ? this.safeString(items[i]['decoration'])
                                           : ' '
-                                        ))
-                                        .replace('tvOS_item', i + 1)
+                                        )) // Parse the decoration
+                                        .replace('tvOS_item', i + 1) // This one is for event(Callback) triggering
     }
 
+    // Add the footer
     temp += tvOS.CompilationView_after
+
+    // Create the element
     temp = tvOS.makeDocument(temp)
+
+    // Create the event handler (listener)
     temp.addEventListener('select', function (e) {
+      // [BEGIN] Make it human readable (and so code readable)
       var pressed = e.target.innerHTML
       pressed = pressed.split('<title')[1]
       pressed = pressed.split('/title>')[0]
       pressed = pressed.split('>')[1]
       pressed = pressed.split('<')[0]
+      // [[END]] Make it human readable (and so code readable)
 
+      // Parse the items
       for (var s = 0; s < items.length; s++) {
+        // If the pressed action is a title then...
         if (pressed === items[s]['title']) {
+          // Trigger the callback (yes looks funny)
           items[s]['action'](pressed)
         }
       }
+
+      // Parse the buttons
       if (typeof buttons !== 'undefined') {
         for (var b = 0; b < buttons.length; b++) {
+          // If the pressed action is a button then...
           if (pressed === buttons[b]['title']) {
+            // Trigger the callback (yes also this one looks funny)
             buttons[b]['action'](pressed)
           }
         }
       }
     })
+
+    // Display the amazing content
     tvOS.display(temp)
   },
 
@@ -1005,17 +1106,20 @@ var tvOS = {
     // Get keyboard, it must be easier...
     // Description temp = dom node.
     var textField = temp.childNodes.item(0) // {0: document}
-                        .childNodes.item(1) // {0: head, 1:searchTemplate}
-                        .childNodes.item(0) // {0: searchField, 1:collectionList}
+                        .childNodes.item(1) // {0: head, 1: searchTemplate}
+                        .childNodes.item(0) // {0: searchField, 1: collectionList}
     //
     // ok we'll finally got the good childnode, now get te Feature 'Keyboard'
     var myKeyboard = textField.getFeature('Keyboard')
     //
     // On text change callback_on_search(myKeyboard.text)
     myKeyboard.onTextChange = function () {
+      // Is there a callback?
       if (typeof callback_on_search === 'function') {
+        // Trigger the callback
         callback_on_search(myKeyboard.text)
       } else {
+        // Otherwise console.log!
         console.log('Search: ' + myKeyboard.text)
       }
     }
@@ -1028,7 +1132,9 @@ var tvOS = {
       pressed = pressed.split('>')[1]
       pressed = pressed.split('<')[0]
 
+      // Is there a callback?
       if (typeof callback_on_select === 'function') {
+        // Trigger the callback
         callback_on_select(pressed)
       }
     })
@@ -1049,7 +1155,9 @@ var tvOS = {
     if (typeof window === 'object') {
       // Used tvOS app with hack.
       this.dismiss()
+      // Set a timeout (due lag of dismiss)
       setTimeout(function (url) {
+        // Finally (Custom function!!!)
         window.location(url)
       }, 1000, url)
     }
@@ -1066,22 +1174,22 @@ var tvOS = {
   toEmoij: function (str) {
     // > tvOS.emoij.nerd
     // < "..." = $1
-    return str.replace(/8\)/g, this.emoij.nerd)       // Nerd Face
-              .replace(/8-\)/g, this.emoij.nerd)      // Nerd Face
-              .replace(/B\)/g, this.emoij.nerd)       // Nerd Face
-              .replace(/g\B-\)/g, this.emoij.nerd)    // Nerd Face
-              .replace(/b\)/g, this.emoij.nerd)       // Nerd Face
-              .replace(/b-\)/g, this.emoij.nerd)      // Nerd Face
-              .replace(/:\)/g, '\ud83d\ude03')    // Smilie :)
-              .replace(/:-\)/g, '\ud83d\ude03')   // Smilie :)
-              .replace(/:]/g, '\ud83d\ude03')    // Smilie :)
-              .replace(/:-]/g, '\ud83d\ude03')   // Smilie :)
-              .replace(/:d/g, '\ud83d\ude00')    // Smilie :D
-              .replace(/:-d/g, '\ud83d\ude00')   // Smilie :D
-              .replace(/:D/g, '\ud83d\ude00')    // Smilie :D
-              .replace(/:-D/g, '\ud83d\ude00')   // Smilie :D
-              .replace(/(H)/g, '\ud83d\ude0e')   // Smilie with sun glasses
-              .replace(/(h)/g, '\ud83d\ude0e')   // Smilie with sun glasses
+    return str.replace(/8\)/g, this.emoij.nerd)     // Nerd Face
+              .replace(/8-\)/g, this.emoij.nerd)    // Nerd Face
+              .replace(/B\)/g, this.emoij.nerd)     // Nerd Face
+              .replace(/g\B-\)/g, this.emoij.nerd)  // Nerd Face
+              .replace(/b\)/g, this.emoij.nerd)     // Nerd Face
+              .replace(/b-\)/g, this.emoij.nerd)    // Nerd Face
+              .replace(/:\)/g, this.emoij.smilie)   // Smilie :)
+              .replace(/:-\)/g, this.emoij.smilie)  // Smilie :)
+              .replace(/:]/g, this.emoij.smilie)    // Smilie :)
+              .replace(/:-]/g, this.emoij.smilie)   // Smilie :)
+              .replace(/:d/g, this.emoij.dsmilie)   // Smilie :D
+              .replace(/:-d/g, this.emoij.dsmilie)  // Smilie :D
+              .replace(/:D/g, this.emoij.dsmilie)   // Smilie :D
+              .replace(/:-D/g, this.emoij.dsmilie)  // Smilie :D
+              .replace(/(H)/g, '\ud83d\ude0e')    // Smilie with sun glasses
+              .replace(/(h)/g, '\ud83d\ude0e')    // Smilie with sun glasses
               .replace(/:\'\(/g, '\ud83d\ude2d')  // Crying Smilie
               .replace(/:\'-\(/g, '\ud83d\ude2d') // Crying Smilie
               .replace(/:\(/g, '\u2639\ufe0f')
@@ -1127,12 +1235,12 @@ var tvOS = {
               .replace(/:S/g, '\ud83d\ude16')
               .replace(/:-s/g, '\ud83d\ude16')
               .replace(/:-S/g, '\ud83d\ude16')
-              .replace(/<3/g, '\u2764\ufe0f')
-              .replace(/\(L\)/g, '\u2764\ufe0f')
-              .replace(/\(l\)/g, '\u2764\ufe0f')
-              .replace(/<\/3/g, '\ud83d\udc94')
-              .replace(/\(U\)/g, '\ud83d\udc94')
-              .replace(/\(u\)/g, '\ud83d\udc94')
+              .replace(/<3/g, this.smilie.heart)          // Heart
+              .replace(/\(L\)/g, this.smilie.heart)       // Heart
+              .replace(/\(l\)/g, this.smilie.heart)       // Heart
+              .replace(/<\/3/g, this.smilie.brokenheart)  // Broken heart
+              .replace(/\(U\)/g, this.smilie.brokenheart) // Broken heart
+              .replace(/\(u\)/g, this.smilie.brokenheart) // Broken heart
   },
 
   /**
@@ -1171,20 +1279,27 @@ var tvOS = {
    * @example })
    */
   ajax: function (url, method, callback) {
+    // if no method, then just GET
     if (typeof method === 'undefined') {
       method = 'GET'
     }
 
+    // init XMLHTTPRequest
     var xmlhttp = new XMLHttpRequest()
+
+    // Open with method, url
     xmlhttp.open(method, url, true)
+
+    // If state is changed then
     xmlhttp.onreadystatechange = function () {
-      var status
+      // If readyState = 4 (done) then.
       if (xmlhttp.readyState === 4) {
-        status = xmlhttp.status
-        if (status === 200) {
+        // If status is 200 (Found)
+        if (xmlhttp.status === 200) {
+          // If type of callback is none
           if (typeof callback === 'undefined') {
             return xmlhttp.responseText
-          } else {
+          } else { // Or function
             callback(xmlhttp.responseText)
           }
         } else {
@@ -1192,6 +1307,8 @@ var tvOS = {
         }
       }
     }
+
+    // Send the actual request.
     xmlhttp.send()
   },
 
@@ -1202,14 +1319,15 @@ var tvOS = {
    * create a nice error
    *
    * @internal
-   * @param string [err] the error
+   * @param string [func] error for (login, etc)
    * @param string [description] the description
-   * @example tvOS._error(err, description)
+   * @example tvOS._error(func, description)
    */
-  _error: function (err, description) {
-    this.alert('Please read the manual' + (typeof err === 'string')
-                                           ? ' for ' + err
-                                           : '',
+  _error: function (func, description) {
+    // Print the error in a alertView
+    this.alert('Please read the manual' + (typeof func === 'string')
+                                           ? ' for ' + func
+                                           : '', // For 'function'
                                           (typeof description === 'string')
                                             ? description
                                             : '') // Create a error.
@@ -1225,12 +1343,13 @@ var tvOS = {
    * @example tvOS.translate(string)
    */
   translate: function (string) {
+    // Does the translated string exists?
     if (typeof tvOS.strings[string] === 'string') {
-      return tvOS.strings[string]
+      return tvOS.strings[string] // Return the translated string
     } else if (tvOS.translations['en'][string] === 'string') {
-      return tvOS.translations['en'][string]
+      return tvOS.translations['en'][string] // Otherwise the English string
     } else {
-      return string
+      return string // Otherwise; return the string
     }
   },
 
@@ -1675,8 +1794,10 @@ var tvOS = {
 // *
 // * @var object strings
 if (typeof tvOS.translations[tvOS.lang] === 'object') {
+  // Does the language exists? then load it
   tvOS.strings = tvOS.translations[tvOS.lang]
 } else {
+  // Otherwise load the english language
   tvOS.strings = tvOS.translations['en']
 }
 
@@ -1694,8 +1815,13 @@ console.log('tvOS.js v' + tvOS.js.version + ' ' + tvOS.js.release + ' (' + tvOS.
  * App.onError Log & Reload.
  */
 App.onError = function (error) {
+  // Log the error
   console.log(error)
+  // And reload
   App.reload()
+  // TODO: Push the error to a server for logging
+  // TODO -> MAKE SERVER
+  // TODO -> SEND ERROR
 }
 
 // END OF tvOS.js
