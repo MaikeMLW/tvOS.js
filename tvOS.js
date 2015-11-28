@@ -938,6 +938,25 @@ var tvOS = {
   },
 
   /**
+   * parseRSS
+   *
+   * Parse a RSS URL
+   *
+   * @param string url the url to parse
+   * @param function callback the function to call back to
+   * @example tvOS.parseRSS(url, callback)
+   */
+  parseRSS: function (url, callback) {
+    // Parse using google api's
+    tvOS.ajax('https://ajax.googleapis.com/ajax/services/feed/load?v=2.0&q=' + url + '&num=20', 'GET', function (data) {
+      // Parse the JSON To object
+      data = JSON.parse(data)
+      // Callback & Done.
+      callback(data)
+    })
+  },
+
+  /**
    * CompilationView
    *
    * create a nice CompilationView (with support of objects)
