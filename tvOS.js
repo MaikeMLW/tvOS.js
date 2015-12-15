@@ -22,6 +22,9 @@
 // *
 // * @var function func
 var func = function () { }
+// DO NOT CREATE EMPTY FUNCTIONS PLEASE USE func instead
+// (for Function list/description generator)
+// Thanks.
 
 // * tvOS XMLHttpRequest Library
 // *
