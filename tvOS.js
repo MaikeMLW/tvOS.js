@@ -268,8 +268,8 @@ if (typeof console === 'undefined' || typeof window === 'undefined') {
     'Please see: https://github.com/wdg/tvOS.js</description>`</alertTemplate></document>', 'application/xml')
   navigationDocument.presentModal(alertDoc)
 
-  var console = {log: function () { }}
-  var window = {location: function () {}}
+  var console = {log: func}
+  var window = {location: func}
 }
 
 // * tvOS Library
@@ -308,7 +308,7 @@ var tvOS = {
     version: '0.0.5',
     date: '01-DEC-2015',
     release: 'beta',
-    url: 'http://localhost:9001/tvOS.js'
+    url: 'https://wdg.github.io/tvOS.js/tvOS.js'
   },
 
   // * tvOS.version
