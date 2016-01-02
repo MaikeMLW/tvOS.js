@@ -9,7 +9,14 @@ evaluateScripts(['https://wdg.github.io/tvOS.js/tvOS.js'], function (success) {
   if (success) {
     tvOS.RatingView('TV Demo Rating', '0.5', function (event) {
       console.log(event)
-      // tvOS.location('https://wdg.github.io/tvOS.js/index.js')
+
+      tvOS.alert('Vote', tvOS.toStar(event) + ' (' + tvOS.toHuman(event) + ')', ['Ok', 'Cancel'], function (e) {
+        if (e === 'Ok') {
+          tvOS.location('https://wdg.github.io/tvOS.js/index.js')
+        } else {
+          tvOS.dismiss()
+        }
+      })
     })
   } else {
     console.log('Missing it all!')

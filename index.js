@@ -150,7 +150,7 @@ function openloadingView (e) {
 }
 
 function openratingView (e) {
-  tvOS.alert('Open ratingView?', '(there is no go back!)', ['Yes', 'No'], function (c) {
+  tvOS.alert('Open ratingView?', '', ['Yes', 'No'], function (c) {
     if (c === 'Yes') {
       tvOS.location('https://wdg.github.io/tvOS.js/example_rating.js')
     } else {

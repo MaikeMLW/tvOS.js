@@ -901,7 +901,7 @@ var tvOS = {
    * @param string rating the default/averange rating
    * @param string [callback] function to relay on (Does not work)
    * @example tvOS.RatingView(title, rating, function (clicked) {
-   * @example   console.log('Clicked on ' + clicked) // Does not work (yet)!
+   * @example   console.log('Clicked on ' + clicked)
    * @example })
    */
   RatingView: function (title, rating, callback) {
@@ -915,29 +915,85 @@ var tvOS = {
     // Create the document..
     temp = tvOS.makeDocument(temp)
 
-    // @DEBUG
-    console.log(temp.getElementById('rating').innerHTML)
-
-    // @DEBUG
-    console.log(temp.childNodes.item(0).childNodes.item(0).childNodes.item(1).innerHTML)
-
-    // @DEBUG
-    temp.addEventListener('select', function (e) { console.log(e) })
-
-    // @DEBUG
-    temp.addEventListener('highlight', function (e) {
-      // @DEBUG
-      console.log(e)
-
-      // @DEBUG
-      var pressed = e.target.innerHTML
-
-      // @DEBUG
-      console.log(pressed)
+    temp.addEventListener('change', function (e) {
+      callback(String(e.value)) // Force to be a string.
     })
 
     // Display the RatingView
     tvOS.display(temp)
+  },
+
+  /**
+   * toStar
+   *
+   * String to star amount
+   * translates:
+   * 0.2 = ★☆☆☆☆
+   * 0.4 = ★★☆☆☆
+   * 0.6 = ★★★☆☆
+   * 0.8 = ★★★★☆
+   * 1.0 = ★★★★★
+   * 1.0 can also be 1
+   *
+   * @param string valToStar String to stars
+   * @return string stars ★/☆
+   * @example tvOS.toStar('0.8')
+   */
+  toStar: function (valToStar) {
+    valToStar = String(valToStar)
+    var filledStar = '★'
+    var emptyStar = '☆'
+    var stars = emptyStar + emptyStar + emptyStar + emptyStar + emptyStar
+
+    if (valToStar === '0.2') {
+      stars = filledStar + emptyStar + emptyStar + emptyStar + emptyStar
+    } else if (valToStar === '0.4') {
+      stars = filledStar + filledStar + emptyStar + emptyStar + emptyStar
+    } else if (valToStar === '0.6') {
+      stars = filledStar + filledStar + filledStar + emptyStar + emptyStar
+    } else if (valToStar === '0.8') {
+      stars = filledStar + filledStar + filledStar + filledStar + emptyStar
+    } else if (valToStar === '1' || valToStar === '1') {
+      stars = filledStar + filledStar + filledStar + filledStar + filledStar
+    } else {
+      stars = emptyStar + emptyStar + emptyStar + emptyStar + emptyStar
+    }
+
+    return String(stars)
+  },
+
+  /**
+   * toHuman
+   *
+   * String to human readable amount
+   * translates:
+   * 0.2 = 1/5
+   * 0.4 = 2/5
+   * 0.6 = 3/5
+   * 0.8 = 4/5
+   * 1.0 = 5/5
+   * 1.0 can also be 1
+   *
+   * @param string valtoHuman String to human readable e.x. 4/5
+   * @return string 4/5
+   * @example tvOS.toHuman('0.8')
+   */
+  toHuman: function (valtoHuman) {
+    valtoHuman = String(valtoHuman)
+
+    if (valtoHuman === '0.2') {
+      return String('1/5')
+    } else if (valtoHuman === '0.4') {
+      return String('2/5')
+    } else if (valtoHuman === '0.6') {
+      return String('3/5')
+    } else if (valtoHuman === '0.8') {
+      return String('4/5')
+    } else if (valtoHuman === '1' || valtoHuman === '1') {
+      return String('5/5')
+    } else {
+      return String('0/5')
+    }
   },
 
   /**
@@ -1541,7 +1597,7 @@ var tvOS = {
    * @param string [image] show a image?
    * @param function [callback_register] register callback action
    * @param string [register] register button text (empty=none)
-   * @example tvOS.xx('Please login', function (data) {
+   * @example tvOS.login('Please login', function (data) {
    * @example   console.log(data)
    * @example }, 'Login', '', function (register_email) {
    * @example   console.log(register_email)
